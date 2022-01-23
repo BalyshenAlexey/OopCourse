@@ -30,10 +30,10 @@ public class Range {
     }
 
     public boolean isInside(double number) {
-       return number >= from && number <= to;
+        return number >= from && number <= to;
     }
 
-    public Range getIntersection (Range range) {
+    public Range getIntersection(Range range) {
         if (isInside(range.getFrom()) && isInside(range.getTo())) {
             return new Range(range.getFrom(), range.getTo());
         } else if (isInside(range.getFrom())) {
@@ -43,5 +43,17 @@ public class Range {
         }
 
         return null;
+    }
+
+    public Range[] getUnion(Range range) {
+        if (isInside(range.getFrom()) && isInside(range.getTo())) {
+            return new Range[]{new Range(this.from, this.to)};
+        } else if (isInside(range.getFrom())) {
+            return new Range[]{new Range(this.from, range.getTo())};
+        } else if (isInside(range.getTo())) {
+            return new Range[]{new Range(range.getFrom(), this.to)};
+        }
+
+        return new Range[]{new Range(this.from, this.to), new Range(range.getFrom(), range.getTo())};
     }
 }
