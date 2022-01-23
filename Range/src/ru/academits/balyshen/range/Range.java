@@ -56,4 +56,18 @@ public class Range {
 
         return new Range[]{new Range(this.from, this.to), new Range(range.getFrom(), range.getTo())};
     }
+
+    public Range[] getComplement(Range range) {
+        if (this.from == range.getFrom() && this.to == range.getTo()) {
+            return null;
+        } else if ((isInside(range.getFrom())) || (this.from == range.getFrom() && isInside(range.getTo()))) {
+            return new Range[]{new Range(range.getTo(), this.to)};
+        } else if ((isInside(range.getTo())) || (isInside(range.getFrom()) && this.to == range.getTo())) {
+            return new Range[]{new Range(this.from, range.getFrom())};
+        } else if (isInside(range.getFrom()) && isInside(range.getTo())) {
+            return new Range[]{new Range(this.from, range.getFrom()), new Range(range.getTo(), this.to)};
+        }
+
+        return new Range[]{new Range(this.from, this.to)};
+    }
 }
