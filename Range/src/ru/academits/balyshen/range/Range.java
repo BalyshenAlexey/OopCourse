@@ -32,4 +32,16 @@ public class Range {
     public boolean isInside(double number) {
        return number >= from && number <= to;
     }
+
+    public Range getIntersection (Range range) {
+        if (isInside(range.getFrom()) && isInside(range.getTo())) {
+            return new Range(range.getFrom(), range.getTo());
+        } else if (isInside(range.getFrom())) {
+            return new Range(range.getFrom(), this.to);
+        } else if (isInside(range.getTo())) {
+            return new Range(this.from, range.getTo());
+        }
+
+        return null;
+    }
 }
