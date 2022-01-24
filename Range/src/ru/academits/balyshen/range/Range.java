@@ -60,10 +60,10 @@ public class Range {
     public Range[] getComplement(Range range) {
         if (this.from == range.getFrom() && this.to == range.getTo()) {
             return null;
-        } else if ((isInside(range.getFrom())) || (this.from == range.getFrom() && isInside(range.getTo()))) {
-            return new Range[]{new Range(range.getTo(), this.to)};
-        } else if ((isInside(range.getTo())) || (isInside(range.getFrom()) && this.to == range.getTo())) {
+        } else if ((this.from == range.getFrom() && isInside(range.getTo())) || (isInside(range.getFrom()) && !isInside(range.getTo()))) {
             return new Range[]{new Range(this.from, range.getFrom())};
+        } else if ((isInside(range.getFrom()) && this.to == range.getTo()) || (!isInside(range.getFrom()) && isInside(range.getTo()))) {
+            return new Range[]{new Range(range.getTo(), this.to)};
         } else if (isInside(range.getFrom()) && isInside(range.getTo())) {
             return new Range[]{new Range(this.from, range.getFrom()), new Range(range.getTo(), this.to)};
         }
