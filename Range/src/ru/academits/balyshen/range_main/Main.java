@@ -45,7 +45,7 @@ public class Main {
         Range[] complementRange = rangeA.getComplement(rangeB);
 
         if (complementRange == null) {
-            System.out.println("Диапазоны A и B равны.");
+            System.out.println("В диапазоне B есть все значения диапазона A.");
         } else if (complementRange.length == 2) {
             System.out.printf("Разность диапазонов A и B: диапазоны от %f до %f и от %f до %f.%n",
                     complementRange[0].getFrom(), complementRange[0].getTo(), complementRange[1].getFrom(), complementRange[1].getTo());
