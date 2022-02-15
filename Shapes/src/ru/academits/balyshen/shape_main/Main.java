@@ -26,7 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Shape[] shapes = new Shape[]{
+        Shape[] shapes = {
                 new Circle(4),
                 new Triangle(1, 2, 4, 5, 7, 8),
                 new Rectangle(3, 7),
@@ -40,7 +40,6 @@ public class Main {
         };
 
         System.out.println("Фигура с максимальной площадью: " + getMaxArea(shapes));
-
         System.out.println("Фигура со вторым по величине периметром: " + getSecondLargestPerimeter(shapes));
     }
 }

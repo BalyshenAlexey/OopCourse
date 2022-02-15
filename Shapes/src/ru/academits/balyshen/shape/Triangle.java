@@ -67,25 +67,19 @@ public class Triangle implements Shape {
 
     @Override
     public double getWidth() {
-        double max = Math.max(x1, Math.max(x2, x3));
-        double min = Math.min(x1, Math.min(x2, x3));
-
-        return max - min;
+        return Math.max(x1, Math.max(x2, x3)) - Math.min(x1, Math.min(x2, x3));
     }
 
     @Override
     public double getHeight() {
-        double max = Math.max(y1, Math.max(y2, y3));
-        double min = Math.min(y1, Math.min(y2, y3));
-
-        return max - min;
+        return Math.max(y1, Math.max(y2, y3)) - Math.min(y1, Math.min(y2, y3));
     }
 
     @Override
     public double getArea() {
-        double side1Length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y3 - y1, 2));
-        double side2Length = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
-        double side3Length = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x2, y2, x3, y3);
+        double side3Length = getSideLength(x3, y3, x1, y1);
 
         double semiPerimeter = (side1Length + side2Length + side3Length) / 2;
 
@@ -94,9 +88,9 @@ public class Triangle implements Shape {
 
     @Override
     public double getPerimeter() {
-        double side1Length = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y3 - y1, 2));
-        double side2Length = Math.sqrt(Math.pow(x3 - x2, 2) + Math.pow(y3 - y2, 2));
-        double side3Length = Math.sqrt(Math.pow(x3 - x1, 2) + Math.pow(y3 - y1, 2));
+        double side1Length = getSideLength(x1, y1, x2, y2);
+        double side2Length = getSideLength(x2, y2, x3, y3);
+        double side3Length = getSideLength(x3, y3, x1, y1);
 
         return side1Length + side2Length + side3Length;
     }
@@ -137,6 +131,10 @@ public class Triangle implements Shape {
 
         Triangle t = (Triangle) o;
 
-        return (x1 == t.x1) && (y1 == t.y1) && (x2 == t.x2) && (y2 == t.y2) && (x3 == t.x3) && (y3 == t.y3);
+        return x1 == t.x1 && y1 == t.y1 && x2 == t.x2 && y2 == t.y2 && x3 == t.x3 && y3 == t.y3;
+    }
+
+    private double getSideLength(double x1, double y1, double x2, double y2) {
+        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

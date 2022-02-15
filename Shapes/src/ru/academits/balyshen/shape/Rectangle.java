@@ -1,61 +1,53 @@
 package ru.academits.balyshen.shape;
 
 public class Rectangle implements Shape {
-    private double side1Length;
-    private double side2Length;
+    private double width;
+    private double height;
 
-    public Rectangle(double side1Length, double side2Length) {
-        this.side1Length = side1Length;
-        this.side2Length = side2Length;
-    }
-
-    public double getSide1Length() {
-        return side1Length;
-    }
-
-    public void setSide1Length(double side1Length) {
-        this.side1Length = side1Length;
-    }
-
-    public double getSide2Length() {
-        return side2Length;
-    }
-
-    public void setSide2Length(double side2Length) {
-        this.side2Length = side2Length;
+    public Rectangle(double width, double side2Length) {
+        this.width = width;
+        this.height = side2Length;
     }
 
     @Override
     public double getWidth() {
-        return side1Length;
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
     }
 
     @Override
     public double getHeight() {
-        return side2Length;
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     @Override
     public double getArea() {
-        return side1Length * side2Length;
+        return width * height;
     }
 
     @Override
     public double getPerimeter() {
-        return 2 * side1Length + 2 * side2Length;
+        return 2 * (width + height);
     }
 
     @Override
     public String toString() {
-        return "Прямоугольник. Длина - " + getHeight() + ", ширина - " + getWidth() + ", площадь - " + getArea() + ", периметр - " + getPerimeter() + ".";
+        return "Прямоугольник. Высота - " + height + ", ширина - " + width + ", площадь - " + getArea() + ", периметр - " + getPerimeter() + ".";
     }
 
     @Override
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = prime * hash + Double.hashCode(side1Length);
-        hash = prime * hash + Double.hashCode(side2Length);
+        hash = prime * hash + Double.hashCode(width);
+        hash = prime * hash + Double.hashCode(height);
         return hash;
     }
 
@@ -71,6 +63,6 @@ public class Rectangle implements Shape {
 
         Rectangle r = (Rectangle) o;
 
-        return side1Length == r.side1Length && side2Length == r.side2Length;
+        return width == r.width && height == r.height;
     }
 }
