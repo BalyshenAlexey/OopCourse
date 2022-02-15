@@ -9,48 +9,35 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Введите начальное число диапазона A:");
-        double startNumberA = scanner.nextDouble();
+        System.out.println("Введите начальное число диапазона 1:");
+        double from1 = scanner.nextDouble();
 
-        System.out.println("Введите конечное число диапазона A:");
-        double endNumberA = scanner.nextDouble();
+        System.out.println("Введите конечное число диапазона 1:");
+        double to1 = scanner.nextDouble();
 
-        Range rangeA = new Range(startNumberA, endNumberA);
+        Range range1 = new Range(from1, to1);
 
-        System.out.println("Введите начальное число диапазона B:");
-        double startNumberB = scanner.nextDouble();
+        System.out.println("Введите начальное число диапазона 2:");
+        double from2 = scanner.nextDouble();
 
-        System.out.println("Введите конечное число диапазона B:");
-        double endNumberB = scanner.nextDouble();
+        System.out.println("Введите конечное число диапазона 2:");
+        double to2 = scanner.nextDouble();
 
-        Range rangeB = new Range(startNumberB, endNumberB);
+        Range range2 = new Range(from2, to2);
 
-        Range intersectionRange = rangeA.getIntersection(rangeB);
+        Range intersection = range1.getIntersection(range2);
 
-        if (intersectionRange == null) {
+        if (intersection == null) {
             System.out.println("Диапазоны A и B не пересекаются.");
         } else {
-            System.out.printf("Пересечение дианпазонов A и B: диапазон от %f до %f.%n", intersectionRange.getFrom(), intersectionRange.getTo());
+            System.out.println("Пересечение диапазонов A и B:" + intersection);
         }
 
-        Range[] unionRange = rangeA.getUnion(rangeB);
+        Range[] union = range1.getUnion(range2);
+        System.out.println("Объединение диапазонов A и B:" + Arrays.toString(union));
 
-        if (unionRange.length == 2) {
-            System.out.printf("Объединение диапазонов A и B: диапазоны от %f до %f и от %f до %f.%n",
-                    unionRange[0].getFrom(), unionRange[0].getTo(), unionRange[1].getFrom(), unionRange[1].getTo());
-        } else {
-            System.out.printf("Объединение диапазонов A и B: диапазон от %f до %f.%n", unionRange[0].getFrom(), unionRange[0].getTo());
-        }
 
-        Range[] complementRange = rangeA.getComplement(rangeB);
-
-        if (complementRange == null) {
-            System.out.println("В диапазоне B есть все значения диапазона A.");
-        } else if (complementRange.length == 2) {
-            System.out.printf("Разность диапазонов A и B: диапазоны от %f до %f и от %f до %f.%n",
-                    complementRange[0].getFrom(), complementRange[0].getTo(), complementRange[1].getFrom(), complementRange[1].getTo());
-        } else {
-            System.out.printf("Разность диапазонов A и B: диапазон от %f до %f.", complementRange[0].getFrom(), complementRange[0].getTo());
-        }
+        Range[] difference = range1.getDifference(range2);
+        System.out.println("Разность диапазонов A и B:" + Arrays.toString(difference));
     }
 }
