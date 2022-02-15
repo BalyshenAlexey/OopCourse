@@ -1,4 +1,6 @@
-package ru.academits.balyshen.shape;
+package ru.academits.balyshen.shape_main;
+
+import ru.academits.balyshen.shape.Shape;
 
 import java.util.Comparator;
 

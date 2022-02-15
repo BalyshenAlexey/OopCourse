@@ -1,35 +1,43 @@
 package ru.academits.balyshen.shape;
 
-public class Circle implements Shape{
-    private double r;
+public class Circle implements Shape {
+    private double radius;
 
-    public Circle(double r) {
-        this.r = r;
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public void setRadius(double radius) {
+        this.radius = radius;
     }
 
     @Override
     public double getWidth() {
-        return 2 * r;
+        return 2 * radius;
     }
 
     @Override
     public double getHeight() {
-        return 2 * r;
+        return 2 * radius;
     }
 
     @Override
     public double getArea() {
-        return Math.PI * Math.pow(r, 2);
+        return Math.PI * Math.pow(radius, 2);
     }
 
     @Override
     public double getPerimeter() {
-        return 2 * r * Math.PI;
+        return 2 * radius * Math.PI;
     }
 
     @Override
     public String toString() {
-        return "Круг. Радиус - " + r
+        return "Круг. Радиус - " + radius
                 + ", диаметр - " + getWidth()
                 + ", площадь - " + getArea()
                 + ", периметр - " + getPerimeter() + ".";
@@ -39,7 +47,7 @@ public class Circle implements Shape{
     public int hashCode() {
         final int prime = 37;
         int hash = 1;
-        hash = prime * hash + Double.hashCode(r);
+        hash = prime * hash + Double.hashCode(radius);
         return hash;
     }
 
@@ -55,6 +63,6 @@ public class Circle implements Shape{
 
         Circle c = (Circle) o;
 
-        return r == c.r;
+        return radius == c.radius;
     }
 }

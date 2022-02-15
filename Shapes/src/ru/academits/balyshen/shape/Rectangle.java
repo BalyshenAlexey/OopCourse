@@ -9,6 +9,22 @@ public class Rectangle implements Shape {
         this.side2Length = side2Length;
     }
 
+    public double getSide1Length() {
+        return side1Length;
+    }
+
+    public void setSide1Length(double side1Length) {
+        this.side1Length = side1Length;
+    }
+
+    public double getSide2Length() {
+        return side2Length;
+    }
+
+    public void setSide2Length(double side2Length) {
+        this.side2Length = side2Length;
+    }
+
     @Override
     public double getWidth() {
         return side1Length;
