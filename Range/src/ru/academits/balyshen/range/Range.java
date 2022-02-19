@@ -34,24 +34,16 @@ public class Range {
     }
 
     public Range getIntersection(Range range) {
-        if (range.from >= from && range.from < to) {
-            return new Range(range.from, Math.min(range.to, to));
-        }
-
-        if (from >= range.from && from < range.to) {
-            return new Range(from, Math.min(range.to, to));
+        if ((range.from >= from && range.from < to) || (from >= range.from && from < range.to)) {
+            return new Range(Math.max(range.from, from), Math.min(range.to, to));
         }
 
         return null;
     }
 
     public Range[] getUnion(Range range) {
-        if (range.from >= from && range.from <= to) {
-            return new Range[]{new Range(from, Math.max(range.to, to))};
-        }
-
-        if (from >= range.from && from <= range.to) {
-            return new Range[]{new Range(range.from, Math.max(range.to, to))};
+        if ((range.from >= from && range.from <= to) || (from >= range.from && from <= range.to)) {
+            return new Range[]{new Range(Math.min(from, range.from), Math.max(range.to, to))};
         }
 
         return new Range[]{new Range(from, to), new Range(range.from, range.to)};
