@@ -5,24 +5,24 @@ import ru.academits.balyshen.shape.*;
 import java.util.Arrays;
 
 public class Main {
-    public static Shape getMaxArea(Shape[] shapes) {
+    public static Shape getMaxAreaShape(Shape[] shapes) {
         Arrays.sort(shapes, new AreaComparator());
+
+        if (shapes.length == 0) {
+            return null;
+        }
 
         return shapes[shapes.length - 1];
     }
 
-    public static Shape getSecondLargestPerimeter(Shape[] shapes) {
+    public static Shape getSecondLargestPerimeterShape(Shape[] shapes) {
         Arrays.sort(shapes, new PerimeterComparator());
 
-        double maxPerimeter = shapes[shapes.length - 1].getPerimeter();
-
-        for (int i = shapes.length - 2; i > 0; i--) {
-            if (shapes[i].getPerimeter() < maxPerimeter) {
-                return shapes[i];
-            }
+        if (shapes.length == 1) {
+            return null;
         }
 
-        return null;
+        return shapes[shapes.length - 2];
     }
 
     public static void main(String[] args) {
@@ -39,7 +39,7 @@ public class Main {
                 new Square(2)
         };
 
-        System.out.println("Фигура с максимальной площадью: " + getMaxArea(shapes));
-        System.out.println("Фигура со вторым по величине периметром: " + getSecondLargestPerimeter(shapes));
+        System.out.println("Фигура с максимальной площадью: " + getMaxAreaShape(shapes));
+        System.out.println("Фигура со вторым по величине периметром: " + getSecondLargestPerimeterShape(shapes));
     }
 }
