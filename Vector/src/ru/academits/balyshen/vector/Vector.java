@@ -52,9 +52,28 @@ public class Vector {
         }
     }
 
+    public int getSize() {
+        return n;
+    }
 
     @Override
     public String toString() {
-        return Arrays.toString(vectorComponents);
+        StringBuilder s = new StringBuilder();
+
+        s.append("{");
+
+        for (int i = 0; i < n; i++) {
+            s.append(vectorComponents[i]);
+
+            if (i == n - 1) {
+                s.append("}");
+
+                break;
+            }
+
+            s.append(", ");
+        }
+
+        return s.toString();
     }
 }
