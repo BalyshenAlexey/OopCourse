@@ -20,8 +20,7 @@ public class Vector {
     }
 
     public Vector(Vector vector) {
-        n = vector.n;
-        vectorComponents = vector.vectorComponents;
+        this(vector.n, vector.vectorComponents);
     }
 
     public Vector(double[] array) {
