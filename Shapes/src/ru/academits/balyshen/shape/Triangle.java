@@ -101,7 +101,7 @@ public class Triangle implements Shape {
                 + "(" + x2 + ", " + y2 + "), "
                 + "(" + x3 + ", " + y3 + "), "
                 + "ширина - " + getWidth()
-                + ", длина - " + getHeight()
+                + ", высота - " + getHeight()
                 + ", площадь - " + getArea()
                 + ", периметр - " + getPerimeter() + ".";
     }
@@ -134,7 +134,7 @@ public class Triangle implements Shape {
         return x1 == t.x1 && y1 == t.y1 && x2 == t.x2 && y2 == t.y2 && x3 == t.x3 && y3 == t.y3;
     }
 
-    private double getSideLength(double x1, double y1, double x2, double y2) {
+    private static double getSideLength(double x1, double y1, double x2, double y2) {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 }

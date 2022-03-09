@@ -6,21 +6,21 @@ import java.util.Arrays;
 
 public class Main {
     public static Shape getMaxAreaShape(Shape[] shapes) {
-        Arrays.sort(shapes, new AreaComparator());
-
         if (shapes.length == 0) {
             return null;
         }
+
+        Arrays.sort(shapes, new AreaComparator());
 
         return shapes[shapes.length - 1];
     }
 
     public static Shape getSecondLargestPerimeterShape(Shape[] shapes) {
-        Arrays.sort(shapes, new PerimeterComparator());
-
-        if (shapes.length == 1) {
+        if (shapes.length <= 1) {
             return null;
         }
+
+        Arrays.sort(shapes, new PerimeterComparator());
 
         return shapes[shapes.length - 2];
     }
