@@ -25,6 +25,14 @@ public class Main {
 
         Range range2 = new Range(from2, to2);
 
+        System.out.println("Введите новое начальное число диапазона 1:");
+        range1.setFrom(scanner.nextDouble());
+
+        System.out.println("Введите новое конечное число диапазона 1:");
+        range1.setTo(scanner.nextDouble());
+
+        System.out.println("Новый диапазон 1 от " + range1.getFrom() + " до " + range1.getTo() + ". Длинна: " + range1.getLength());
+
         Range intersection = range1.getIntersection(range2);
 
         if (intersection == null) {
