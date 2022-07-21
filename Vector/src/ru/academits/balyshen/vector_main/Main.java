@@ -4,48 +4,48 @@ import ru.academits.balyshen.vector.Vector;
 
 public class Main {
     public static void main(String[] args) {
-        Vector vector0 = new Vector(6);
+        Vector vector1 = new Vector(6);
 
         double[] array1 = {1, 3, 2, 4, 7};
-        Vector vector1 = new Vector(array1);
+        Vector vector2 = new Vector(array1);
 
         double[] array2 = {1, 5, 2, 4, 7, 4, 8};
-        Vector vector2 = new Vector(8, array2);
+        Vector vector3 = new Vector(10, array2);
 
-        System.out.println("Нулевой вектор: " + vector0);
-        System.out.println("Вектор 1: " + vector1 + " с размерностью: " + vector1.getSize());
+        System.out.println("Вектор 1: " + vector1);
         System.out.println("Вектор 2: " + vector2 + " с размерностью: " + vector2.getSize());
+        System.out.println("Вектор 3: " + vector3 + " с размерностью: " + vector3.getSize());
         System.out.println();
 
-        Vector vector1Copy1 = new Vector(vector1);
-        vector1Copy1.addVector(vector2);
-        System.out.println("Вектор 1 + Вектор 2: " + vector1Copy1);
-
-        Vector vector1Copy2 = new Vector(vector1);
-        vector1Copy2.subtractVector(vector2);
-        System.out.println("Вектор 1 - Вектор 2: " + vector1Copy2);
-
         Vector vector2Copy1 = new Vector(vector2);
-        vector2Copy1.multiplyByScalar(4);
-        System.out.println("Вектор 2 * 4: " + vector2Copy1);
+        vector2Copy1.add(vector3);
+        System.out.println("Вектор 2 + Вектор 3: " + vector2Copy1);
 
         Vector vector2Copy2 = new Vector(vector2);
-        vector2Copy2.turnOver();
-        System.out.println("Вектор противоположный вектору 2: " + vector2Copy2);
+        vector2Copy2.subtract(vector3);
+        System.out.println("Вектор 2 - Вектор 3: " + vector2Copy2);
 
-        System.out.println("3 компонента вектора 2: " + vector2.getComponent(2));
+        Vector vector3Copy1 = new Vector(vector3);
+        vector3Copy1.multiplyByScalar(4);
+        System.out.println("Вектор 3 * 4: " + vector3Copy1);
 
-        System.out.println("Заменим 3 компоненту вектора 2 на 7");
+        Vector vector3Copy2 = new Vector(vector3);
+        vector3Copy2.turn();
+        System.out.println("Вектор противоположный вектору 3: " + vector3Copy2);
+
+        System.out.println("Третья компонента вектора 3: " + vector2.getComponent(2));
+
+        System.out.println("Заменим третью компоненту вектора 3 на 7");
         vector2.setComponent(2, 7);
 
-        System.out.println("Вектор 2 после изменения: " + vector2);
+        System.out.println("Вектор 3 после изменения: " + vector2);
 
-        Vector vector3 = Vector.getSum(vector1, vector2);
-        System.out.println("Вектор 3 равный сумме векторов 1 и 2: " + vector3);
+        Vector vector4 = Vector.getSum(vector2, vector3);
+        System.out.println("Вектор 4 равный сумме векторов 2 и 3: " + vector4);
 
-        Vector vector4 = Vector.getDifference(vector1, vector2);
-        System.out.println("Вектор 4 равный разности векторов 1 и 2: " + vector4);
+        Vector vector5 = Vector.getDifference(vector2, vector3);
+        System.out.println("Вектор 5 равный разности векторов 2 и 3: " + vector5);
 
-        System.out.println("Скалярное произведение векторов 1 и 2: " + Vector.getScalarProduct(vector1, vector2));
+        System.out.println("Скалярное произведение векторов 2 и 3: " + Vector.getScalarProduct(vector2, vector3));
     }
 }
