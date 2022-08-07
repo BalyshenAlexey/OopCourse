@@ -17,6 +17,8 @@ public class Main {
         System.out.println("Вектор 3: " + vector3 + " с размерностью: " + vector3.getSize());
         System.out.println();
 
+        System.out.println("Длина Вектора 2: " + vector2.getLength());
+
         Vector vector2Copy1 = new Vector(vector2);
         vector2Copy1.add(vector3);
         System.out.println("Вектор 2 + Вектор 3: " + vector2Copy1);
