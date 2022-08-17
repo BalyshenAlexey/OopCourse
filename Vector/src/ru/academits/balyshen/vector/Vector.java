@@ -14,20 +14,20 @@ public class Vector {
     }
 
     public Vector(Vector vector) {
-        this.components = vector.components;
+        components = Arrays.copyOf(vector.components, vector.components.length);
     }
 
     public Vector(double[] array) {
         if (array.length == 0) {
-            throw new IllegalArgumentException("Некорректная размерность. Должен быть не пустой масив.");
+            throw new IllegalArgumentException("Некорректная размерность. Должен быть не пустой массив.");
         }
 
         components = Arrays.copyOf(array, array.length);
     }
 
     public Vector(int vectorSize, double[] array) {
-        if (vectorSize == 0) {
-            throw new IllegalArgumentException("Некорректная размерность. Введите значение больше 0.");
+        if (vectorSize <= 0) {
+            throw new IllegalArgumentException("Некорректная размерность: " + vectorSize + ". Введите значение больше 0.");
         }
 
         components = Arrays.copyOf(array, vectorSize);
@@ -44,8 +44,7 @@ public class Vector {
         sb.append("{");
 
         for (double component : components) {
-            sb.append(component);
-            sb.append(", ");
+            sb.append(component).append(", ");
         }
 
         sb.delete(sb.length() - 2, sb.length());
@@ -56,26 +55,30 @@ public class Vector {
     }
 
     public void add(Vector vector) {
-        int vectorSize = vector.getSize();
+        if (components.length < vector.components.length) {
+            components = Arrays.copyOf(components, vector.components.length);
 
-        if (components.length < vectorSize) {
-            components = Arrays.copyOf(components, vectorSize);
-        }
-
-        for (int i = 0; i < components.length; i++) {
-            components[i] += vector.components[i];
+            for (int i = 0; i < components.length; i++) {
+                components[i] += vector.components[i];
+            }
+        } else {
+            for (int i = 0; i < vector.components.length; i++) {
+                components[i] += vector.components[i];
+            }
         }
     }
 
     public void subtract(Vector vector) {
-        int vectorSize = vector.getSize();
+        if (components.length < vector.components.length) {
+            components = Arrays.copyOf(components, vector.components.length);
 
-        if (components.length < vectorSize) {
-            components = Arrays.copyOf(components, vectorSize);
-        }
-
-        for (int i = 0; i < components.length; i++) {
-            components[i] -= vector.components[i];
+            for (int i = 0; i < components.length; i++) {
+                components[i] -= vector.components[i];
+            }
+        } else {
+            for (int i = 0; i < vector.components.length; i++) {
+                components[i] -= vector.components[i];
+            }
         }
     }
 
@@ -93,7 +96,7 @@ public class Vector {
         double componentsSquaresSum = 0;
 
         for (double component : components) {
-            componentsSquaresSum += Math.pow(component, 2);
+            componentsSquaresSum += component * component;
         }
 
         return Math.sqrt(componentsSquaresSum);
@@ -123,10 +126,6 @@ public class Vector {
         }
 
         Vector v = (Vector) o;
-
-        if (components.length != v.components.length) {
-            return false;
-        }
 
         return Arrays.equals(components, v.components);
     }
