@@ -15,8 +15,7 @@ public class ArrayListHome {
 
     public static void main(String[] args) {
         try {
-            Reader reader = new FileReader("ArrayListHome\\ArrayListHome_input.txt");
-            BufferedReader br = new BufferedReader(reader);
+            BufferedReader br = new BufferedReader(new FileReader("ArrayListHome\\ArrayListHome_input.txt"));
 
             ArrayList<String> lines = new ArrayList<>();
             String line;
