@@ -41,7 +41,7 @@ public class ArrayListHome {
 
         for (int i = 0; i < list1.size(); i++) {
             if (isEven(list1.get(i))) {
-                list1.remove(i);
+                list1.remove(list1.get(i));
             }
         }
 
