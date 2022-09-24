@@ -34,11 +34,11 @@ public class Matrix {
     }
 
     public Matrix(Vector[] array) {
-        int maxLength = 1;
+        int maxSize = 1;
 
         for (Vector vector : array) {
-            if (vector.getLength() > maxLength) {
-                maxLength = vector.getLength();
+            if (vector.getLength() > maxSize) {
+                maxSize = vector.getSize();
             }
         }
 
