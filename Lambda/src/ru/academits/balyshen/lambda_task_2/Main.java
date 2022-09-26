@@ -8,16 +8,16 @@ public class Main {
     public static void main(String[] args) {
         DoubleStream squareRoots = DoubleStream
                 .iterate(0, x -> x + 1)
-                .map(x -> Math.sqrt(x));
+                .map(Math::sqrt);
 
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("Введите количество элементов, которые необходимо вычислить:");
-        int index = scanner.nextInt();
+        int elementsCount = scanner.nextInt();
 
-        System.out.println("Квадратные корни первых " + index + " элементов:");
+        System.out.println("Квадратные корни первых " + elementsCount + " элементов:");
         squareRoots
-                .limit(index)
+                .limit(elementsCount)
                 .forEach(System.out::println);
 
         System.out.println();
@@ -27,11 +27,11 @@ public class Main {
                 .map(x -> x[0]);
 
         System.out.println("Введите количество элементов в последовательности чисел Фибоначчи, которые необходимо вывести:");
-        int fibonacciNumberIndex = scanner.nextInt();
+        int fibonacciNumbersCount = scanner.nextInt();
 
-        System.out.println(fibonacciNumberIndex + " первых элементов в последовательности чисел Фибоначчи:");
+        System.out.println(fibonacciNumbersCount + " первых элементов в последовательности чисел Фибоначчи:");
         fibonacciNumbers
-                .limit(fibonacciNumberIndex)
+                .limit(fibonacciNumbersCount)
                 .forEach(System.out::println);
     }
 }

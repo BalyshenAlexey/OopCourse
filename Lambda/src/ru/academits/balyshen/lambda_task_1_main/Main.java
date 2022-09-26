@@ -36,38 +36,38 @@ public class Main {
         System.out.println();
 
         List<String> uniqueNamesList = persons.stream()
-                .map(p -> p.getName())
+                .map(Person::getName)
                 .distinct()
-                .collect(Collectors.toList());
+                .toList();
 
-        System.out.println("Уникальные имена в списке: " + uniqueNamesList.stream().collect(Collectors.joining(", ")) + ".");
+        System.out.println(uniqueNamesList.stream().collect(Collectors.joining(", ", "Уникальные имена в списке: ", ".")));
         System.out.println();
 
         List<Person> personsWithAgeUnder18List = persons.stream()
                 .filter(p -> p.getAge() < 18)
-                .collect(Collectors.toList());
+                .toList();
 
         System.out.println("Список людей младше 18: " + personsWithAgeUnder18List);
         System.out.println();
 
         double averageAgeForPersonsWithAgeUnder18 = personsWithAgeUnder18List.stream()
-                .mapToInt(x -> x.getAge())
-                .average().getAsDouble();
+                .mapToInt(Person::getAge)
+                .average().orElse(-1);
 
         System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18 + ".");
         System.out.println();
 
-        Map<String, Double> personsByName = persons.stream()
-                .collect(Collectors.groupingBy(p -> p.getName(), Collectors.averagingInt(p -> p.getAge())));
+        Map<String, Double> averageAgeByName = persons.stream()
+                .collect(Collectors.groupingBy(Person::getName, Collectors.averagingInt(Person::getAge)));
 
         System.out.println("Map, в котором ключи – имена, а значения – средний возраст:");
-        personsByName.forEach((name, averageAge) -> System.out.printf("Имя: %s. Средний возраст: %s.%n", name, averageAge));
+        averageAgeByName.forEach((name, averageAge) -> System.out.printf("Имя: %s. Средний возраст: %s.%n", name, averageAge));
 
         System.out.println();
 
         System.out.println("Имена людей, возраст которых от 20 до 45, в порядке убывания возраста:");
         persons.stream()
-                .filter(p -> p.getAge() >= 20 && p.getAge() < 45)
+                .filter(p -> p.getAge() >= 20 && p.getAge() <= 45)
                 .sorted((p1, p2) -> p2.getAge() - p1.getAge())
                 .forEach(p -> System.out.println(p.getName()));
     }
