@@ -1,25 +1,27 @@
 package ru.academits.balyshen.list;
 
+import java.util.NoSuchElementException;
+
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
     private int count;
 
     public SinglyLinkedList() {
-        head = null;
-        count = 0;
     }
 
-    public SinglyLinkedList(ListItem<T> head, int count) {
-        this.head = head;
-        this.count = count;
+    @SafeVarargs
+    public SinglyLinkedList(T... data) {
+        for (int i = data.length - 1; i >= 0; i--) {
+            addFirst(data[i]);
+        }
     }
 
     public int getCount() {
         return count;
     }
 
-    public ListItem<T> getHead() {
-        return head;
+    public T getFirst() {
+        return head.getData();
     }
 
     public void addFirst(T data) {
@@ -28,267 +30,185 @@ public class SinglyLinkedList<T> {
         ++count;
     }
 
-    public T getDataByIndex(int index) {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
+    private void isIndexExist(int index) {
+        if (index < 0 || index > count - 1) {
+            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Введите значение от 0 до "
+                    + (count - 1) + ".");
+        }
 
-            if (index < 0 || index > count - 1) {
-                throw new IllegalArgumentException();
-            }
+        if (head == null) {
+            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Текущий список пуст.");
+        }
+    }
 
+    private ListItem<T> getItemByIndex(int index) {
+        ListItem<T> item = head;
+        int i = 0;
+
+        while (i != index) {
+            item = item.getNext();
+
+            i++;
+        }
+        return item;
+    }
+
+    public T get(int index) {
+        isIndexExist(index);
+
+        return getItemByIndex(index).getData();
+    }
+
+    public T set(int index, T data) {
+        isIndexExist(index);
+
+        ListItem<T> item = getItemByIndex(index);
+        T oldData = item.getData();
+        item.setData(data);
+
+        return oldData;
+    }
+
+    public T deleteByIndex(int index) {
+        isIndexExist(index);
+
+        if (index == 0) {
+            return deleteFirst();
+        }
+
+        ListItem<T> item = getItemByIndex(index - 1);
+        T deletedData = item.getNext().getData();
+        item.setNext(item.getNext().getNext());
+
+        --count;
+
+        return deletedData;
+    }
+
+
+    public void addByIndex(int index, T data) {
+        if (index < 0 || index > count) {
+            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Введите значение от 0 до "
+                    + count + ".");
+        }
+
+        if (index == 0) {
+            addFirst(data);
+        } else {
             ListItem<T> item = head;
-            int i = 0;
 
-            while (i != index) {
+            for (int i = 0; i < index - 1; i++) {
                 item = item.getNext();
-
-                i++;
             }
 
-            return item.getData();
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка! Некорректный индекс. Введите значение от 0 до " + (count - 1) + ".");
+            item.setNext(new ListItem<>(data, item.getNext()));
 
-            return null;
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-
-            return null;
+            ++count;
         }
     }
 
-    public T changeDataByIndex(int index, T data) {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
-
-            if (index < 0 || index > count - 1) {
-                throw new IllegalArgumentException();
-            }
-
-            ListItem<T> item = head;
-            int i = 0;
-
-            while (i != index) {
-                item = item.getNext();
-
-                i++;
-            }
-
-            T itemData = item.getData();
-            item.setData(data);
-
-            return itemData;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка! Некорректный индекс. Введите значение от 0 до " + (count - 1) + ".");
-
-            return null;
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-
-            return null;
+    private boolean isEquals(T data1, T data2) {
+        if (data1 == data2) {
+            return true;
         }
+
+        if (data1 == null || data2 == null) {
+            return false;
+        }
+
+        return data1.equals(data2);
     }
 
-    public T deleteItemByIndex(int index) {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
-
-            if (index < 0 || index > count - 1) {
-                throw new IllegalArgumentException();
-            }
-
-            if (index == 0) {
-                return deleteFirst();
-            }
-
-            ListItem<T> item = head;
-            int i = 1;
-
-            while (i != index) {
-                item = item.getNext();
-
-                i++;
-            }
-
-            T itemData = item.getNext().getData();
-            item.setNext(item.getNext().getNext());
-
-            --count;
-
-            return itemData;
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка! Некорректный индекс. Введите значение от 0 до " + (count - 1) + ".");
-
-            return null;
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-
-            return null;
-        }
-    }
-
-
-    public void addItemByIndex(int index, T data) {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
-
-            if (index < 0 || index > count - 1) {
-                throw new IllegalArgumentException();
-            }
-
-            if (index == 0) {
-                addFirst(data);
-            } else {
-                ListItem<T> item = head;
-                int i = 0;
-                int previousIndex = index - 1;
-
-                while (i != previousIndex) {
-                    item = item.getNext();
-
-                    i++;
-                }
-
-                ListItem<T> newItem = new ListItem<>(data, item.getNext());
-                item.setNext(newItem);
-
-                ++count;
-            }
-
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка! Некорректный индекс. Введите значение от 0 до " + (count - 1) + ".");
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-        }
-    }
-
-    public boolean deleteItemByData(T data) {
+    public boolean deleteByData(T data) {
         if (head == null) {
             return false;
         }
 
-        boolean isDeleted;
-
-        do {
-            if (head.getData().equals(data)) {
-                head = head.getNext();
-
-                --count;
-                isDeleted = true;
-            } else {
-                isDeleted = false;
-            }
-        } while (isDeleted);
-
-
-        for (ListItem<T> item = head.getNext(), previousItem = head; item != null; ) {
-            if (item.getData().equals(data)) {
-                previousItem.setNext(item.getNext());
-                item = item.getNext();
-
-                --count;
-
-                isDeleted = true;
-            } else {
-                previousItem = item;
-                item = item.getNext();
-            }
-
-        }
-
-        return isDeleted;
-    }
-
-    public T deleteFirst() {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
-
-            T headData = head.getData();
+        if (isEquals(head.getData(), data)) {
             head = head.getNext();
 
             --count;
 
-            return headData;
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-
-            return null;
+            return true;
         }
+
+        for (ListItem<T> item = head.getNext(), previousItem = head; item != null; previousItem = item, item = item.getNext()) {
+            if (isEquals(item.getData(), data)) {
+                previousItem.setNext(item.getNext());
+
+                --count;
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public void reverse(SinglyLinkedList<T> list) {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
-
-            SinglyLinkedList<T> revLinkedList = new SinglyLinkedList<>();
-
-            for (int i = 0; i < count; i++) {
-                revLinkedList.addFirst((list.getDataByIndex(i)));
-            }
-
-            head = revLinkedList.getHead();
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
+    public T deleteFirst() {
+        if (head == null) {
+            throw new NoSuchElementException("Ошибка! Передан пустой список.");
         }
+
+        T deletedData = head.getData();
+        head = head.getNext();
+
+        --count;
+
+        return deletedData;
+    }
+
+    public void reverse() {
+        ListItem<T> currentItem = head;
+        ListItem<T> previousItem = null;
+        ListItem<T> nextItem;
+
+        while (currentItem != null) {
+            nextItem = currentItem.getNext();
+            currentItem.setNext(previousItem);
+            previousItem = currentItem;
+            currentItem = nextItem;
+        }
+
+        head = previousItem;
     }
 
     public SinglyLinkedList<T> copy() {
-        try {
-            if (head == null) {
-                throw new NullPointerException();
-            }
+        if (head == null) {
+            return new SinglyLinkedList<>();
+        }
 
-            ListItem<T> item = head;
+        ListItem<T> item = head;
+        ListItem<T> copyHead = new ListItem<>(item.getData());
+        ListItem<T> copyTail = copyHead;
 
-            ListItem<T> copyHead = new ListItem<>(item.getData(), null);
-            ListItem<T> copyTail = copyHead;
+        item = item.getNext();
+
+        while (item != null) {
+            copyTail.setNext(new ListItem<>(item.getData()));
+            copyTail = copyTail.getNext();
+            copyTail.setNext(null);
 
             item = item.getNext();
-
-            while (item != null) {
-                copyTail.setNext(new ListItem<>());
-                copyTail = copyTail.getNext();
-                copyTail.setData(item.getData());
-                copyTail.setNext(null);
-
-                item = item.getNext();
-            }
-
-            return new SinglyLinkedList<>(copyHead, count);
-        } catch (NullPointerException e) {
-            System.out.println("Ошибка! Передан пустой список.");
-
-            return null;
         }
+
+        SinglyLinkedList<T> copy = new SinglyLinkedList<>();
+        copy.head = copyHead;
+
+        return copy;
     }
 
-    @Override
     public String toString() {
-        ListItem<T> p = head;
-
-        if (p == null) {
-
-            return "В списке нет значений.";
+        if (head == null) {
+            return "[]";
         }
 
         StringBuilder sb = new StringBuilder();
 
         sb.append("[");
 
-        for (; p != null; p = p.getNext()) {
-            sb.append(p.getData().toString()).append(", ");
+        for (ListItem<T> p = head; p != null; p = p.getNext()) {
+            sb.append(p.getData()).append(", ");
         }
 
         sb.delete(sb.length() - 2, sb.length());

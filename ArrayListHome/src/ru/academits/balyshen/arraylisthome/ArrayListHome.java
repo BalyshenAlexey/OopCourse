@@ -2,25 +2,20 @@ package ru.academits.balyshen.arraylisthome;
 
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 
 public class ArrayListHome {
-    public static boolean isEven(Integer number) {
-        return number % 2 == 0;
-    }
-
     public static void main(String[] args) {
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("ArrayListHome\\ArrayListHome_input.txt"));
-
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader("ArrayListHome\\ArrayListHome_input.txt"))) {
             ArrayList<String> lines = new ArrayList<>();
             String line;
 
-            while ((line = br.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 lines.add(line);
             }
 
@@ -31,16 +26,23 @@ public class ArrayListHome {
                 System.out.println("Список строк из файла: " + lines);
                 System.out.println();
             }
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка ввода! Отсутствует необходимый файл или указан неверный путь");
         } catch (IOException e) {
-            System.out.println("Ошибка! Файл отсутствует");
+            System.out.println("Ошибка ввода!");
+            e.printStackTrace();
         }
 
         ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         System.out.println("Первый список целых чисел: " + list1);
 
-        for (int i = 0; i < list1.size(); i++) {
-            if (isEven(list1.get(i))) {
-                list1.remove(list1.get(i));
+        Iterator<Integer> list1Iterator = list1.iterator();
+
+        while (list1Iterator.hasNext()) {
+            Integer number = list1Iterator.next();
+
+            if (number % 2 == 0) {
+                list1Iterator.remove();
             }
         }
 
@@ -52,9 +54,9 @@ public class ArrayListHome {
 
         ArrayList<Integer> list2WithoutRepeats = new ArrayList<>(list2.size());
 
-        for (int i = 0; i < list2.size(); i++) {
-            if (list2.indexOf(list2.get(i)) == i) {
-                list2WithoutRepeats.add(list2.get(i));
+        for (Integer number : list2) {
+            if (!list2WithoutRepeats.contains(number)) {
+                list2WithoutRepeats.add(number);
             }
         }
 

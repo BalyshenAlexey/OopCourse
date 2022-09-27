@@ -1,40 +1,31 @@
 package ru.academits.balyshen.list;
 
-public class ListItem<T> {
+class ListItem<T> {
     private T data;
     private ListItem<T> next;
 
-    public ListItem() {
-    }
-
-    public ListItem(T data) {
+    protected ListItem(T data) {
         this.data = data;
     }
 
-    public ListItem(T data, ListItem<T> next) {
+    protected ListItem(T data, ListItem<T> next) {
         this.data = data;
         this.next = next;
     }
 
-    public T getData() {
+    protected T getData() {
         return data;
     }
 
-    public void setData(T data) {
+    protected void setData(T data) {
         this.data = data;
     }
 
-    public ListItem<T> getNext() {
+    protected ListItem<T> getNext() {
         return next;
     }
 
-    public void setNext(ListItem<T> next) {
+    protected void setNext(ListItem<T> next) {
         this.next = next;
     }
-
-    @Override
-    public String toString() {
-        return data.toString();
-    }
-
 }
