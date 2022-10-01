@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class ArrayListHome {
     public static void main(String[] args) {
@@ -30,19 +29,15 @@ public class ArrayListHome {
             System.out.println("Ошибка ввода! Отсутствует необходимый файл или указан неверный путь");
         } catch (IOException e) {
             System.out.println("Ошибка ввода!");
-            e.printStackTrace();
         }
 
-        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+        ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         System.out.println("Первый список целых чисел: " + list1);
 
-        Iterator<Integer> list1Iterator = list1.iterator();
-
-        while (list1Iterator.hasNext()) {
-            Integer number = list1Iterator.next();
-
-            if (number % 2 == 0) {
-                list1Iterator.remove();
+        for (int i = 0; i <= list1.size() - 1; i++) {
+            if (list1.get(i) % 2 == 0) {
+                list1.remove(i);
+                i--;
             }
         }
 
