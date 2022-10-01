@@ -3,49 +3,46 @@ package ru.academits.balyshen.array_list;
 import java.util.Collection;
 import java.util.Iterator;
 
-public interface MyList<T> {
-
-    boolean add();
+interface MyList<T> {
+    boolean add(T element);
 
     void add(int index, T element);
 
-    boolean addAll(Collection<? extends T> c);
+    boolean addAll(Collection<? extends T> collection);
 
-    boolean addAll(int index, Collection<? extends T> c);
+    boolean addAll(int index, Collection<? extends T> collection);
 
     void clear();
 
-    Object clone();
+    boolean contains(T element);
 
-    boolean contains();
+    void ensureCapacity(int requiredCapacity);
 
-    void ensureCapacity(int minCapacity);
+    T get(int index);
 
-    T get();
-
-    int indexOf();
+    int indexOf(T element);
 
     boolean isEmpty();
 
     Iterator<T> iterator();
 
-    int lastIndexOf();
+    int lastIndexOf(T element);
 
     T remove(int index);
 
-    boolean remove(T element);
+    boolean remove(T data);
 
-    boolean removeAll(Collection<?> c);
+    boolean removeAll(Collection<? extends T> collection);
 
     void removeRange(int fromIndex, int toIndex);
 
-    boolean retainAll(Collection<?> c);
+    boolean retainAll(Collection<? extends T> collection);
 
     T set(int index, T element);
 
     int size();
 
-    T[] toArray();
+    T[] toArray(T[] array);
 
     void trimToSize();
 }
