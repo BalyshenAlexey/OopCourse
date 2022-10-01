@@ -250,7 +250,7 @@ public class Main {
 
         System.out.println("Заменить в Списке 1 элемент по индексу " + setIndex + " на " + newElement2);
 
-        arrayList1.set(setIndex, newElement2);
+        System.out.println("Старое значение " + arrayList1.set(setIndex, newElement2));
 
         System.out.println("Список 1: " + arrayList1);
         System.out.println();
