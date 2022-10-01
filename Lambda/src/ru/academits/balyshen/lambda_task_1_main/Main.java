@@ -52,7 +52,16 @@ public class Main {
 
         double averageAgeForPersonsWithAgeUnder18 = personsWithAgeUnder18List.stream()
                 .mapToInt(Person::getAge)
-                .average().orElse(-1);
+                .average()
+                .orElse(-1);
+
+        if (averageAgeForPersonsWithAgeUnder18 == -1) {
+            System.out.println("В списке отсутствуют люди младше 18.");
+            System.out.println();
+        } else {
+            System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18 + ".");
+            System.out.println();
+        }
 
         System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18 + ".");
         System.out.println();
