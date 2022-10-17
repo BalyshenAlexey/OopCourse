@@ -34,7 +34,7 @@ public class ArrayListHome {
         ArrayList<Integer> list1 = new ArrayList<>(Arrays.asList(1, 2, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         System.out.println("Первый список целых чисел: " + list1);
 
-        for (int i = 0; i <= list1.size() - 1; i++) {
+        for (int i = 0; i < list1.size(); i++) {
             if (list1.get(i) % 2 == 0) {
                 list1.remove(i);
                 i--;
