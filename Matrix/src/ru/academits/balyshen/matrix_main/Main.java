@@ -5,9 +5,15 @@ import ru.academits.balyshen.vector.Vector;
 
 public class Main {
     public static void main(String[] args) {
-        Matrix matrix1 = new Matrix(6, 6);
+        System.out.println("1. Проверка конструктора типа Matrix(n, m):");
 
-        System.out.println(matrix1);
+        int linesCount = 5;
+        int columnsCount = 3;
+
+        Matrix matrix1 = new Matrix(linesCount, columnsCount);
+
+        System.out.println("Создадим матрицу нулей размером " + linesCount + " на " + columnsCount);
+        System.out.println("Матрица 1: " + matrix1);
 
         Matrix matrix1Copy1 = new Matrix(matrix1);
 

@@ -3,7 +3,7 @@ package matrix;
 import ru.academits.balyshen.vector.Vector;
 
 public class Matrix {
-    private Vector[] components;
+    private final Vector[] components;
 
     public Matrix(int linesCount, int columnsCount) {
         components = new Vector[linesCount];
@@ -14,11 +14,17 @@ public class Matrix {
     }
 
     public Matrix(Matrix matrix) {
-        this.components = matrix.components;
+        int linesCount = matrix.getLinesCount();
+
+        components = new Vector[linesCount];
+
+        for (int i = 0; i < linesCount; i++) {
+            components[i] = new Vector(matrix.components[i]);
+        }
     }
 
     public Matrix(double[][] array) {
-        int maxLength = 1;
+        int maxLength = 0;
 
         for (double[] doubles : array) {
             if (doubles.length > maxLength) {
@@ -34,7 +40,7 @@ public class Matrix {
     }
 
     public Matrix(Vector[] array) {
-        int maxSize = 1;
+        int maxSize = 0;
 
         for (Vector vector : array) {
             if (vector.getLength() > maxSize) {
@@ -45,12 +51,32 @@ public class Matrix {
         components = new Vector[array.length];
 
         for (int i = 0; i < array.length; i++) {
-            components[i] = new Vector(array[i]);
+            components[i] = new Vector(maxSize);
         }
+    }
+
+    public int getLinesCount() {
+        return components.length;
+    }
+
+    public int getColumnsCount() {
+        return components[0].getSize();
+    }
+
+    public Vector getLinesByIndex(int index) {
+        if (index < 0 || index > components.length - 1) {
+            throw new IndexOutOfBoundsException("Некорректный индекс: " + index + ". Введите значение от 0 до " + (components.length - 1) + ".");
+        }
+
+        return components [index];
     }
 
     @Override
     public String toString() {
+        if (components.length == 0) {
+            return "{}";
+        }
+
         StringBuilder sb = new StringBuilder();
 
         sb.append("{");
