@@ -5,6 +5,7 @@ import ru.academits.balyshen.lambda_task_1.Person;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -50,27 +51,23 @@ public class Main {
         System.out.println("Список людей младше 18: " + personsWithAgeUnder18List);
         System.out.println();
 
-        double averageAgeForPersonsWithAgeUnder18 = personsWithAgeUnder18List.stream()
+        OptionalDouble averageAgeForPersonsWithAgeUnder18 = personsWithAgeUnder18List.stream()
                 .mapToInt(Person::getAge)
-                .average()
-                .orElse(-1);
+                .average();
 
-        if (averageAgeForPersonsWithAgeUnder18 == -1) {
-            System.out.println("В списке отсутствуют люди младше 18.");
+        if (averageAgeForPersonsWithAgeUnder18.isPresent()) {
+            System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18.getAsDouble() + ".");
             System.out.println();
         } else {
-            System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18 + ".");
+            System.out.println("В списке отсутствуют люди младше 18.");
             System.out.println();
         }
 
-        System.out.println("Средний возраст людей младше 18: " + averageAgeForPersonsWithAgeUnder18 + ".");
-        System.out.println();
-
-        Map<String, Double> averageAgeByName = persons.stream()
+        Map<String, Double> averageAgeByNames = persons.stream()
                 .collect(Collectors.groupingBy(Person::getName, Collectors.averagingInt(Person::getAge)));
 
         System.out.println("Map, в котором ключи – имена, а значения – средний возраст:");
-        averageAgeByName.forEach((name, averageAge) -> System.out.printf("Имя: %s. Средний возраст: %s.%n", name, averageAge));
+        averageAgeByNames.forEach((name, averageAge) -> System.out.printf("Имя: %s. Средний возраст: %s.%n", name, averageAge));
 
         System.out.println();
 
