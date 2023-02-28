@@ -1,6 +1,7 @@
 package ru.academits.balyshen.list;
 
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SinglyLinkedList<T> {
     private ListItem<T> head;
@@ -21,6 +22,10 @@ public class SinglyLinkedList<T> {
     }
 
     public T getFirst() {
+        if (head == null) {
+            throw new IndexOutOfBoundsException("Ошибка! Метод вызван от пустого списка.");
+        }
+
         return head.getData();
     }
 
@@ -31,13 +36,13 @@ public class SinglyLinkedList<T> {
     }
 
     private void isIndexExist(int index) {
-        if (index < 0 || index > count - 1) {
-            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Введите значение от 0 до "
-                    + (count - 1) + ".");
+        if (head == null) {
+            throw new IndexOutOfBoundsException("Ошибка! Метод вызван от пустого списка.");
         }
 
-        if (head == null) {
-            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Текущий список пуст.");
+        if (index < 0 || index >= count) {
+            throw new IndexOutOfBoundsException("Ошибка! Некорректный индекс: " + index + ". Введите значение от 0 до "
+                    + (count - 1) + ".");
         }
     }
 
@@ -50,6 +55,7 @@ public class SinglyLinkedList<T> {
 
             i++;
         }
+
         return item;
     }
 
@@ -95,28 +101,16 @@ public class SinglyLinkedList<T> {
         if (index == 0) {
             addFirst(data);
         } else {
-            ListItem<T> item = head;
+            ListItem<T> item = getItemByIndex(index - 1);
 
-            for (int i = 0; i < index - 1; i++) {
-                item = item.getNext();
+            if (index < count) {
+                item.setNext(new ListItem<>(data, item.getNext()));
+            } else {
+                item.setNext(new ListItem<>(data));
             }
-
-            item.setNext(new ListItem<>(data, item.getNext()));
 
             ++count;
         }
-    }
-
-    private boolean isEquals(T data1, T data2) {
-        if (data1 == data2) {
-            return true;
-        }
-
-        if (data1 == null || data2 == null) {
-            return false;
-        }
-
-        return data1.equals(data2);
     }
 
     public boolean deleteByData(T data) {
@@ -124,7 +118,7 @@ public class SinglyLinkedList<T> {
             return false;
         }
 
-        if (isEquals(head.getData(), data)) {
+        if (Objects.equals(head.getData(), data)) {
             head = head.getNext();
 
             --count;
@@ -133,7 +127,7 @@ public class SinglyLinkedList<T> {
         }
 
         for (ListItem<T> item = head.getNext(), previousItem = head; item != null; previousItem = item, item = item.getNext()) {
-            if (isEquals(item.getData(), data)) {
+            if (Objects.equals(item.getData(), data)) {
                 previousItem.setNext(item.getNext());
 
                 --count;
@@ -147,7 +141,7 @@ public class SinglyLinkedList<T> {
 
     public T deleteFirst() {
         if (head == null) {
-            throw new NoSuchElementException("Ошибка! Передан пустой список.");
+            throw new NoSuchElementException("Ошибка! Метод вызван от пустого списка.");
         }
 
         T deletedData = head.getData();
@@ -194,6 +188,7 @@ public class SinglyLinkedList<T> {
 
         SinglyLinkedList<T> copy = new SinglyLinkedList<>();
         copy.head = copyHead;
+        copy.count = count;
 
         return copy;
     }
