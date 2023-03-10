@@ -1,14 +1,12 @@
 package ru.academits.balyshen.array_list_main;
 
-import ru.academits.balyshen.array_list.MyArrayList;
+import ru.academits.balyshen.array_list.ArrayList;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class Main {
     public static void main(String[] args) {
-        MyArrayList<String> arrayList1 = new MyArrayList<>();
+        ArrayList<String> arrayList1 = new ArrayList<>();
 
         System.out.println("Создадим пустой список 1: " + arrayList1);
         System.out.println();
@@ -76,7 +74,7 @@ public class Main {
         }
 
         int capacity = 6;
-        MyArrayList<String> arrayList2 = new MyArrayList<>(capacity);
+        ArrayList<String> arrayList2 = new ArrayList<>(capacity);
 
         arrayList2.add("1");
         arrayList2.add("2");
@@ -109,7 +107,23 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("7. Проверка метода ensureCapacity:");
+        System.out.println("7. Проверка метода containsAll:");
+
+        ArrayList<String> collection3 = new ArrayList<>();
+        collection3.add("25");
+        collection3.add("2");
+
+        System.out.println("Содержит ли Список 1 коллекцию: " + collection3 + "?");
+
+        if (arrayList1.containsAll(collection3)) {
+            System.out.println("Список 1 содержит коллекцию: " + collection3);
+            System.out.println();
+        } else {
+            System.out.println("Искомые значения в Списке 1 отсуствуют");
+            System.out.println();
+        }
+
+        System.out.println("8. Проверка метода ensureCapacity:");
 
         int requiredCapacity = 25;
 
@@ -120,15 +134,15 @@ public class Main {
         System.out.println("Список 1: " + arrayList1);
         System.out.println();
 
-        System.out.println("8. Проверка метода get:");
+        System.out.println("9. Проверка метода get:");
 
-        int searchIndex = 8;
+        int searchIndex = 14;
 
         System.out.println("Получить из Списка 1 значение по индексу: " + searchIndex);
         System.out.println("Значение по индексу " + searchIndex + ": " + arrayList1.get(searchIndex));
         System.out.println();
 
-        System.out.println("9. Проверка метода indexOf:");
+        System.out.println("10. Проверка метода indexOf:");
 
         String searchElement2 = "2";
 
@@ -144,7 +158,7 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("10. Проверка метода isEmpty:");
+        System.out.println("11. Проверка метода isEmpty:");
 
         if (arrayList1.isEmpty()) {
             System.out.println("Список пуст");
@@ -154,19 +168,17 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("11. Проверка метода iterator:");
+        System.out.println("12. Проверка метода iterator:");
         System.out.println("Распечаем значения из Списка 1 используя итератор");
 
-        Iterator<String> iterator = arrayList1.iterator();
-
-        while (iterator.hasNext()) {
-            System.out.print(iterator.next() + " ");
+        for (String s : arrayList1) {
+            System.out.print(s + " ");
         }
 
         System.out.println();
         System.out.println();
 
-        System.out.println("12. Проверка метода lastIndexOf:");
+        System.out.println("13. Проверка метода lastIndexOf:");
 
         String searchElement3 = "2";
 
@@ -182,7 +194,7 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("13. Проверка метода remove по индексу:");
+        System.out.println("14. Проверка метода remove по индексу:");
 
         int removedElementIndex = 10;
 
@@ -192,7 +204,7 @@ public class Main {
         System.out.println("Список 1: " + arrayList1);
         System.out.println();
 
-        System.out.println("14. Проверка метода remove по значению:");
+        System.out.println("15. Проверка метода remove по значению:");
 
         String removedElement = "10";
 
@@ -206,11 +218,11 @@ public class Main {
             System.out.println();
         }
 
-        System.out.println("15. Проверка метода removeAll:");
-        System.out.println("Удалить из Списка 1 значения коллекции: " + collection1);
+        System.out.println("16. Проверка метода removeAll:");
+        System.out.println("Удалить из Списка 1 значения коллекции: " + collection3);
 
-        if (arrayList1.removeAll(collection1)) {
-            System.out.println("Из списка 1 удалены значения: " + collection1);
+        if (arrayList1.removeAll(collection3)) {
+            System.out.println("Из списка 1 удалены значения содержащиеся в коллекции: " + collection3);
             System.out.println("Список 1: " + arrayList1);
             System.out.println();
         } else {
@@ -218,18 +230,6 @@ public class Main {
             System.out.println("Список 1: " + arrayList1);
             System.out.println();
         }
-
-        System.out.println("16. Проверка метода removeRange:");
-
-        int fromIndex = 3;
-        int toIndex = 5;
-
-        System.out.println("Удалить из Списка 1 элементы c " + fromIndex + " по " + toIndex + " индексы");
-
-        arrayList1.removeRange(fromIndex, toIndex);
-
-        System.out.println("Список 1: " + arrayList1);
-        System.out.println();
 
         System.out.println("17. Проверка метода retainAll:");
         System.out.println("Удалить из Списка 1 все значения не встречающиеся в коллекции " + collection2);
