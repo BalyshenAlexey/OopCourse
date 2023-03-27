@@ -110,7 +110,7 @@ public class Main {
         System.out.println("7. Проверка метода containsAll:");
 
         ArrayList<String> collection3 = new ArrayList<>();
-        collection3.add("25");
+        collection3.add("24");
         collection3.add("2");
 
         System.out.println("Содержит ли Список 1 коллекцию: " + collection3 + "?");
@@ -169,7 +169,7 @@ public class Main {
         }
 
         System.out.println("12. Проверка метода iterator:");
-        System.out.println("Распечаем значения из Списка 1 используя итератор");
+        System.out.println("Распечатаем значения из Списка 1 используя итератор");
 
         for (String s : arrayList1) {
             System.out.print(s + " ");
