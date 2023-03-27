@@ -92,8 +92,8 @@ public class ArrayList<E> implements List<E> {
     }
 
     @Override
-    public boolean contains(Object item) {
-        return indexOf(item) != -1;
+    public boolean contains(Object object) {
+        return indexOf(object) != -1;
     }
 
     @Override
