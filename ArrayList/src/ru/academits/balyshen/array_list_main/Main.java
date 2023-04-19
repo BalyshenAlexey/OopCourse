@@ -115,11 +115,12 @@ public class Main {
 
         System.out.println("Содержит ли Список 1 коллекцию: " + collection3 + "?");
 
+        //noinspection SlowListContainsAll
         if (arrayList1.containsAll(collection3)) {
             System.out.println("Список 1 содержит коллекцию: " + collection3);
             System.out.println();
         } else {
-            System.out.println("Искомые значения в Списке 1 отсуствуют");
+            System.out.println("Искомые значения в Списке 1 отсутствуют");
             System.out.println();
         }
 
@@ -127,7 +128,7 @@ public class Main {
 
         int requiredCapacity = 25;
 
-        System.out.println("Присвоить Списку 1 минимальную вместимсть: " + requiredCapacity);
+        System.out.println("Присвоить Списку 1 минимальную вместимость: " + requiredCapacity);
 
         arrayList1.ensureCapacity(requiredCapacity);
 
@@ -196,7 +197,7 @@ public class Main {
 
         System.out.println("14. Проверка метода remove по индексу:");
 
-        int removedElementIndex = 10;
+        int removedElementIndex = 1;
 
         System.out.println("Удалить из Списка 1 элемент с индексом: " + removedElementIndex);
 
