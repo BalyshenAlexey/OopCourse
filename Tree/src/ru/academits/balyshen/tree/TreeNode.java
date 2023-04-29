@@ -5,6 +5,12 @@ class TreeNode<T> {
     private TreeNode<T> right;
     private T data;
 
+    public TreeNode (T data){
+        this.data = data;
+        left = null;
+        right = null;
+    }
+
     public T getData() {
         return this.data;
     }
@@ -27,10 +33,5 @@ class TreeNode<T> {
 
     public void setRightNode(TreeNode<T> right) {
         this.right = right;
-    }
-
-    @Override
-    public String toString() {
-        return "[TreeNode = " + data + ", left = " + left + ", right = " + right + ']';
     }
 }
