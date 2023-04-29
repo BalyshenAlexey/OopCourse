@@ -15,7 +15,7 @@ public class ArrayList<E> implements List<E> {
     }
 
     public ArrayList(int initialCapacity) {
-        if (initialCapacity < 0) {
+        if (initialCapacity <= 0) {
             throw new IllegalArgumentException("Некорректная вместимость: " + initialCapacity + ". Вместимость должна быть больше 0.");
         }
 
@@ -86,7 +86,7 @@ public class ArrayList<E> implements List<E> {
             return;
         }
 
-        Arrays.fill(items, 0, size - 1, null);
+        Arrays.fill(items, 0, size, null);
 
         size = 0;
         ++modCount;
@@ -172,7 +172,7 @@ public class ArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException("Некорректный индекс: " + index + ". Метод вызван от пустого списка.");
         }
 
-        if (index < 0 || index >= size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException("Некорректный индекс: " + index + ". Индекс должен быть от 0 до " + size + ".");
         }
     }

@@ -28,7 +28,7 @@ public class Main {
         System.out.println("Список 1 после добавления элементов: " + arrayList1);
         System.out.println();
 
-        int index1 = 6;
+        int index1 = 10;
         String newElement1 = "12";
 
         System.out.println("2. Проверка метода add по индексу:");
@@ -103,7 +103,7 @@ public class Main {
             System.out.println("Список 1 содержит значение: " + searchElement1);
             System.out.println();
         } else {
-            System.out.println("Искомое значение отсуствует");
+            System.out.println("Искомое значение отсутствует");
             System.out.println();
         }
 
