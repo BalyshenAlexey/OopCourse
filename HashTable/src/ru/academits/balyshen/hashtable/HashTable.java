@@ -246,7 +246,6 @@ public class HashTable<E> implements Collection<E> {
             }
         }
 
-
         sb.delete(sb.length() - 2, sb.length());
 
         sb.append(']');
