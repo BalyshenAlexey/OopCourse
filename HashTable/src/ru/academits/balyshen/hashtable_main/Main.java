@@ -170,7 +170,6 @@ public class Main {
         System.out.println("Хэш-таблица 2 после очистки: " + hashTable2);
         System.out.println();
 
-
         System.out.println("10. Проверка метода iterator:");
         System.out.print("Распечатаем значения из Списка 1 используя итератор: ");
 
@@ -188,7 +187,7 @@ public class Main {
 
         System.out.println("12. Проверка метода toArray(T1[] array):");
 
-        Integer[] array = hashTable1.toArray(new Integer[20]);
+        Integer[] array = hashTable1.toArray(new Integer[5]);
 
         System.out.println("Массив из хэш-таблицы 1: " + Arrays.toString(array));
         System.out.println();

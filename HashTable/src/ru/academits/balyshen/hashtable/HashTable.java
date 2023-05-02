@@ -34,11 +34,7 @@ public class HashTable<E> implements Collection<E> {
     }
 
     private int getIndex(Object object) {
-        if (object != null) {
-            return Math.abs(object.hashCode() % lists.length);
-        }
-
-        return 0;
+        return object != null ? Math.abs(object.hashCode() % lists.length) : 0;
     }
 
     @Override
@@ -59,7 +55,7 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean addAll(Collection<? extends E> collection) {
-        if (collection.size() == 0) {
+        if (collection.isEmpty()) {
             return false;
         }
 
@@ -92,11 +88,7 @@ public class HashTable<E> implements Collection<E> {
     public boolean remove(Object object) {
         int index = getIndex(object);
 
-        if (lists[index] == null) {
-            return false;
-        }
-
-        if (lists[index].remove(object)) {
+        if (lists[index] != null && lists[index].remove(object)) {
             ++modCount;
             --elementsCount;
 
@@ -125,22 +117,23 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        boolean isDeleted = false;
         int newElementsCount = 0;
 
         for (ArrayList<E> list : lists) {
             if (list != null) {
-                isDeleted = list.retainAll(collection);
+                list.retainAll(collection);
                 newElementsCount += list.size();
             }
         }
 
-        if (isDeleted) {
-            ++modCount;
-            elementsCount = newElementsCount;
+        if (elementsCount == newElementsCount) {
+            return false;
         }
 
-        return isDeleted;
+        ++modCount;
+        elementsCount = newElementsCount;
+
+        return true;
     }
 
     @Override
@@ -158,9 +151,9 @@ public class HashTable<E> implements Collection<E> {
     }
 
     private class HashTableIterator implements Iterator<E> {
+        private final int expectedModCount = modCount;
         private int indexInArray = -1;
         private int indexInList = -1;
-        private final int expectedModCount = modCount;
         private int passedElementsCount = 0;
 
         public boolean hasNext() {
@@ -181,17 +174,14 @@ public class HashTable<E> implements Collection<E> {
             if (indexInList == -1) {
                 do {
                     ++indexInArray;
-                } while (lists[indexInArray] == null || lists[indexInArray].size() == 0);
+                } while (lists[indexInArray] == null || lists[indexInArray].isEmpty());
             }
 
-            if (indexInList + 2 < lists[indexInArray].size()) {
-                ++indexInList;
-                ++passedElementsCount;
-                nextElement = lists[indexInArray].get(indexInList);
-            } else {
-                ++indexInList;
-                ++passedElementsCount;
-                nextElement = lists[indexInArray].get(indexInList);
+            ++indexInList;
+            ++passedElementsCount;
+            nextElement = lists[indexInArray].get(indexInList);
+
+            if (indexInList + 1 >= lists[indexInArray].size()) {
                 indexInList = -1;
             }
 
@@ -202,28 +192,29 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public Object[] toArray() {
         Object[] array = new Object[elementsCount];
+        int index = 0;
 
-        int currentPositionInArray = 0;
-
-        for (ArrayList<E> list : lists) {
-            if (list != null) {
-                System.arraycopy(list.toArray(), 0, array, currentPositionInArray, list.size());
-                currentPositionInArray += list.size();
-            }
+        for (E element : this) {
+            array[index++] = element;
         }
 
         return array;
     }
 
-    @SuppressWarnings("unchecked")
+
     @Override
     public <T> T[] toArray(T[] array) {
         if (array.length < elementsCount) {
+            //noinspection unchecked
             return (T[]) Arrays.copyOf(toArray(), elementsCount, array.getClass());
         }
 
         //noinspection SuspiciousSystemArraycopy
         System.arraycopy(toArray(), 0, array, 0, elementsCount);
+
+        if (array.length > elementsCount) {
+            array[elementsCount] = null;
+        }
 
         return array;
     }
@@ -237,22 +228,24 @@ public class HashTable<E> implements Collection<E> {
         for (ArrayList<E> list : lists) {
             if (list == null) {
                 sb.append("null, ");
+                continue;
+            }
+
+            if (list.isEmpty()) {
+                sb.append("[], ");
             } else {
-                if (list.size() == 0) {
-                    sb.append("[], ");
-                } else {
-                    sb.append('[');
+                sb.append('[');
 
-                    for (E element : list) {
-                        sb.append(element).append(", ");
-                    }
-
-                    sb.delete(sb.length() - 2, sb.length());
-
-                    sb.append("], ");
+                for (E element : list) {
+                    sb.append(element).append(", ");
                 }
+
+                sb.delete(sb.length() - 2, sb.length());
+
+                sb.append("], ");
             }
         }
+
 
         sb.delete(sb.length() - 2, sb.length());
 
