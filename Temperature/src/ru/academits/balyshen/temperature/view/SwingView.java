@@ -1,14 +1,14 @@
 package ru.academits.balyshen.temperature.view;
 
 import ru.academits.balyshen.temperature.controller.Controller;
-
 import javax.swing.*;
+import java.awt.*;
 
 public class SwingView implements View {
     private final Controller controller;
     private JLabel resultLabel;
     private JFrame frame;
-    private JComboBox<String> conversionScale;
+    private JComboBox<String> resultingScalesComboBox;
 
     public SwingView(Controller controller) {
         this.controller = controller;
@@ -23,103 +23,79 @@ public class SwingView implements View {
             }
 
             frame = new JFrame("Конвертер температур");
-            frame.setSize(400, 300);
+            frame.setSize(340, 280);
             frame.setResizable(false);
             frame.setLocationRelativeTo(null);
             frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+            JPanel panel = new JPanel(new GridBagLayout());
+            GridBagConstraints c = new GridBagConstraints();
 
-            JPanel referenceScalePanel = new JPanel();
-            JPanel conversionScalePanel = new JPanel();
-            JPanel inputPanel = new JPanel();
-            JPanel resultPanel = new JPanel();
+            c.gridwidth = 3;
+            c.insets = new Insets(10,0,10,0);
+            panel.add(new JLabel("Выберите шкалы для конвертации"), c);
 
-            String[] temperatureScales = {"Цельсия", "Кельвина", "Фаренгейта"};
-            JComboBox<String> referenceScale = new JComboBox<>(temperatureScales);
-            conversionScale = new JComboBox<>(temperatureScales);
+            JPanel initialScalePanel = new JPanel();
+            initialScalePanel.add(new JLabel("Исходная шкала:"));
+            JComboBox<String> initialScalesComboBox = new JComboBox<>(controller.getScales());
+            initialScalePanel.add(initialScalesComboBox);
 
-            JTextField temperatureTextField = new JTextField(20);
+            c.gridy = 1;
+            c.insets = new Insets(0,10,0,0);
+            panel.add(initialScalePanel, c);
 
-            referenceScalePanel.add(new JLabel("Исходная шкала:"));
-            referenceScalePanel.add(referenceScale);
+            JPanel resultingScalePanel = new JPanel();
+            resultingScalePanel.add(new JLabel("Результирующая шкала:"));
+            resultingScalesComboBox = new JComboBox<>(controller.getScales());
+            resultingScalePanel.add(resultingScalesComboBox);
 
-            conversionScalePanel.add(new JLabel("Конвертируемая шкала:"));
-            conversionScalePanel.add(conversionScale);
+            c.gridy = 2;
+            c.insets = new Insets(0,10,0,0);
+            panel.add(resultingScalePanel, c);
 
-            inputPanel.add(new JLabel("Введите температуру:"));
-            inputPanel.add(temperatureTextField);
+            c.gridy = 3;
+            c.insets = new Insets(20,0,0,0);
+            panel.add(new JLabel("Введите температуру:"), c);
 
-            resultLabel = new JLabel();
-            resultPanel.add(resultLabel);
-
-            panel.add(referenceScalePanel);
-            panel.add(conversionScalePanel);
-            panel.add(inputPanel);
+            JTextField temperatureTextField = new JTextField(30);
+            c.gridy = 4;
+            c.insets = new Insets(0,0,0,0);
+            panel.add(temperatureTextField, c);
 
             JButton convertButton = new JButton("Конвертировать");
             convertButton.addActionListener(e -> {
                 try {
-                    if (referenceScale.getItemAt(referenceScale.getSelectedIndex()).equals("Цельсия")) {
-                        if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Кельвина")) {
-                            String celsiusTemperatureText = temperatureTextField.getText();
-                            double celsiusTemperature = Double.parseDouble(celsiusTemperatureText);
-                            controller.convertCelsiusToKelvin(celsiusTemperature);
-                        } else if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Фаренгейта")) {
-                            String celsiusTemperatureText = temperatureTextField.getText();
-                            double celsiusTemperature = Double.parseDouble(celsiusTemperatureText);
-                            controller.convertCelsiusToFahrenheit(celsiusTemperature);
-                        } else {
-                            String celsiusTemperatureText = temperatureTextField.getText();
-                            double celsiusTemperature = Double.parseDouble(celsiusTemperatureText);
-                            controller.returnCelsiusTemperature(celsiusTemperature);
-                        }
-                    } else if (referenceScale.getItemAt(referenceScale.getSelectedIndex()).equals("Кельвина")) {
-                        if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Цельсия")) {
-                            String kelvinTemperatureText = temperatureTextField.getText();
-                            double kelvinTemperature = Double.parseDouble(kelvinTemperatureText);
-                            controller.convertKelvinToCelsius(kelvinTemperature);
-                        } else if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Фаренгейта")) {
-                            String kelvinTemperatureText = temperatureTextField.getText();
-                            double kelvinTemperature = Double.parseDouble(kelvinTemperatureText);
-                            controller.convertKelvinToFahrenheit(kelvinTemperature);
-                        } else {
-                            String kelvinTemperatureText = temperatureTextField.getText();
-                            double kelvinTemperature = Double.parseDouble(kelvinTemperatureText);
-                            controller.returnKelvinTemperature(kelvinTemperature);
-                        }
-                    } else {
-                        if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Цельсия")) {
-                            String fahrenheitTemperatureText = temperatureTextField.getText();
-                            double fahrenheitTemperature = Double.parseDouble(fahrenheitTemperatureText);
-                            controller.convertFahrenheitToCelsius(fahrenheitTemperature);
-                        } else if (conversionScale.getItemAt(conversionScale.getSelectedIndex()).equals("Кельвина")) {
-                            String fahrenheitTemperatureText = temperatureTextField.getText();
-                            double fahrenheitTemperature = Double.parseDouble(fahrenheitTemperatureText);
-                            controller.convertFahrenheitToKelvin(fahrenheitTemperature);
-                        } else {
-                            String fahrenheitTemperatureText = temperatureTextField.getText();
-                            double fahrenheitTemperature = Double.parseDouble(fahrenheitTemperatureText);
-                            controller.returnFahrenheitTemperature(fahrenheitTemperature);
-                        }
-                    }
+                    String celsiusTemperatureText = temperatureTextField.getText();
+                    double celsiusTemperature = Double.parseDouble(celsiusTemperatureText);
+                    controller.convertTemperature(celsiusTemperature, initialScalesComboBox.getItemAt(initialScalesComboBox.getSelectedIndex()),
+                            resultingScalesComboBox.getItemAt(resultingScalesComboBox.getSelectedIndex()));
+
                 } catch (NumberFormatException exception) {
                     showError("Температура должна быть числом");
                 }
             });
 
-            panel.add(resultPanel);
-            panel.add(convertButton);
+            c.gridy = 5;
+            c.insets = new Insets(10,0,0,0);
+            panel.add(convertButton, c);
 
-            frame.add(panel);
+            c.gridy = 6;
+            c.insets = new Insets(20,0,0,0);
+            panel.add(new JLabel("Результат:"), c);
+
+            resultLabel = new JLabel();
+            c.gridy = 7;
+            c.insets = new Insets(0,0,0,0);
+            panel.add(resultLabel, c);
+
+            frame.add(panel, BorderLayout.PAGE_START);
             frame.setVisible(true);
         });
     }
 
     @Override
     public void updateTemperature(double temperature) {
-        resultLabel.setText("Температура в шкале " + conversionScale.getItemAt(conversionScale.getSelectedIndex()) + " " + temperature);
+        resultLabel.setText("Температура в шкале " + resultingScalesComboBox.getItemAt(resultingScalesComboBox.getSelectedIndex()) + ": " + temperature);
     }
 
     @Override
