@@ -7,8 +7,8 @@ import java.util.Queue;
 import java.util.function.Consumer;
 
 public class Tree<T> {
-    private TreeNode<T> root;
     private final Comparator<? super T> comparator;
+    private TreeNode<T> root;
     private int size;
 
     public Tree() {
@@ -19,11 +19,17 @@ public class Tree<T> {
         this.comparator = comparator;
     }
 
-    @SuppressWarnings("unchecked")
     private int compare(T data1, T data2) {
-        Comparator<? super T> comparator = this.comparator;
-
         if (comparator == null) {
+            if (data1 == null && data2 == null) {
+                return 0;
+            }
+
+            if (data1 == null || data2 == null) {
+                return (data1 == null) ? -1 : 1;
+            }
+
+            //noinspection unchecked
             return ((Comparable<? super T>) data1).compareTo(data2);
         }
 
@@ -195,7 +201,7 @@ public class Tree<T> {
         return size;
     }
 
-    public void traversalTreeByWidthTraversal(Consumer<T> action) {
+    public void getAroundInWidth(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
@@ -221,7 +227,7 @@ public class Tree<T> {
         }
     }
 
-    public void traversalTreeByDepthTraversal(Consumer<T> action) {
+    public void getAroundInDepth(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
@@ -247,7 +253,7 @@ public class Tree<T> {
         }
     }
 
-    public void traversalTreeByDepthTraversalWithRecursion(Consumer<T> action) {
+    public void getAroundInDepthRecursively(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }

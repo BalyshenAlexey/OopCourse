@@ -33,26 +33,26 @@ public class Main {
 
         System.out.print("Распечатаем дерево 1 используя обход в ширину: ");
 
-        tree1.traversalTreeByWidthTraversal(printTreeElement);
+        tree1.getAroundInWidth(printTreeElement);
 
         System.out.println();
         System.out.println();
 
         System.out.print("Распечатаем дерево 1 используя обход в глубину без рекурсии: ");
 
-        tree1.traversalTreeByDepthTraversal(printTreeElement);
+        tree1.getAroundInDepth(printTreeElement);
 
         System.out.println();
         System.out.println();
 
         System.out.print("Распечатаем дерево 1 используя обход в глубину с рекурсией: ");
 
-        tree1.traversalTreeByDepthTraversalWithRecursion(printTreeElement);
+        tree1.getAroundInDepthRecursively(printTreeElement);
 
         System.out.println();
         System.out.println();
 
-        System.out.println("1. Проверка метода findNodeByData: ");
+        System.out.println("1. Проверка метода findNodeByData:");
 
         Integer searchElement = 200;
 
@@ -62,11 +62,11 @@ public class Main {
             System.out.println("Искомый элемент содержится в дереве");
             System.out.println();
         } else {
-            System.out.println("Искомый элемент отсуствует");
+            System.out.println("Искомый элемент отсутствует");
             System.out.println();
         }
 
-        System.out.println("2. Проверка метода deleteNodeByData: ");
+        System.out.println("2. Проверка метода deleteNodeByData:");
 
         Comparator<Integer> comparator = Integer::compareTo;
 
@@ -75,31 +75,31 @@ public class Main {
         System.out.println("В дерево 2 добавлены значения: 100, 50, 60, 40, 75, 200");
         System.out.println();
 
-        tree1.add(100);
-        tree1.add(50);
-        tree1.add(60);
-        tree1.add(40);
-        tree1.add(75);
-        tree1.add(200);
+        tree2.add(100);
+        tree2.add(50);
+        tree2.add(60);
+        tree2.add(40);
+        tree2.add(75);
+        tree2.add(200);
 
         Integer deletedElement = 200;
 
         System.out.println("Удалить из дерева 2 элемент: " + deletedElement);
 
-        if (tree1.deleteByData(deletedElement)) {
+        if (tree2.deleteByData(deletedElement)) {
             System.out.println("Искомый элемент удален");
             System.out.print("Распечатаем дерево 2 после удаления используя обход в ширину: ");
 
-            tree2.traversalTreeByWidthTraversal(printTreeElement);
+            tree2.getAroundInWidth(printTreeElement);
 
             System.out.println();
             System.out.println();
         } else {
-            System.out.println("Искомый элемент отсуствует");
+            System.out.println("Искомый элемент отсутствует");
             System.out.println();
         }
 
-        System.out.println("3. Проверка метода getElementsCount: ");
+        System.out.println("3. Проверка метода getElementsCount:");
         System.out.println("В дереве 1 содержится " + tree1.size() + " элементов");
     }
 }
