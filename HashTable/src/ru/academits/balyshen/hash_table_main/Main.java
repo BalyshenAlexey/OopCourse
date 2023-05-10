@@ -1,6 +1,6 @@
-package ru.academits.balyshen.hashtable_main;
+package ru.academits.balyshen.hash_table_main;
 
-import ru.academits.balyshen.hashtable.HashTable;
+import ru.academits.balyshen.hash_table.HashTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,17 +45,17 @@ public class Main {
 
         System.out.println("2. Проверка метода addAll:");
 
-        ArrayList<Integer> collection1 = new ArrayList<>();
-        collection1.add(55);
-        collection1.add(16);
-        collection1.add(45);
-        collection1.add(8675);
-        collection1.add(75);
-        collection1.add(88);
+        ArrayList<Integer> list1 = new ArrayList<>();
+        list1.add(55);
+        list1.add(16);
+        list1.add(45);
+        list1.add(8675);
+        list1.add(75);
+        list1.add(88);
 
-        System.out.println("Вставить в хэш-таблицу 2 значения коллекции " + collection1);
+        System.out.println("Вставить в хэш-таблицу 2 значения коллекции " + list1);
 
-        if (hashTable2.addAll(collection1)) {
+        if (hashTable2.addAll(list1)) {
             System.out.println("Хэш-таблица 2 после добавления элементов: " + hashTable2);
             System.out.println("Размер хэш-таблицы: " + hashTable2.size());
             System.out.println();
@@ -72,8 +72,8 @@ public class Main {
         } else {
             System.out.print("В хэш-таблице содержатся элементы: ");
 
-            for (Integer s : hashTable1) {
-                System.out.print(s + " ");
+            for (Integer number : hashTable1) {
+                System.out.print(number + " ");
             }
 
             System.out.println();
@@ -97,15 +97,15 @@ public class Main {
 
         System.out.println("5. Проверка метода containsAll:");
 
-        ArrayList<Integer> collection2 = new ArrayList<>();
-        collection2.add(7);
-        collection2.add(8);
-        collection2.add(11);
+        ArrayList<Integer> list2 = new ArrayList<>();
+        list2.add(7);
+        list2.add(8);
+        list2.add(11);
 
-        System.out.println("Содержит ли хэш-таблица 1 элементы: " + collection2 + "?");
+        System.out.println("Содержит ли хэш-таблица 1 элементы: " + list2 + "?");
 
-        if (hashTable1.containsAll(collection2)) {
-            System.out.println("Хэш-таблица 1 содержит элементы: " + collection2);
+        if (hashTable1.containsAll(list2)) {
+            System.out.println("Хэш-таблица 1 содержит элементы: " + list2);
             System.out.println();
         } else {
             System.out.println("Искомые элементы отсутствуют");
@@ -129,10 +129,10 @@ public class Main {
         }
 
         System.out.println("7. Проверка метода removeAll:");
-        System.out.println("Удалить из хэш-таблицы 1 значения коллекции: " + collection2);
+        System.out.println("Удалить из хэш-таблицы 1 значения коллекции: " + list2);
 
-        if (hashTable1.removeAll(collection2)) {
-            System.out.println("Из хэш-таблицы 1 удалены значения содержащиеся в коллекции: " + collection2);
+        if (hashTable1.removeAll(list2)) {
+            System.out.println("Из хэш-таблицы 1 удалены значения содержащиеся в коллекции: " + list2);
             System.out.println("Хэш-таблица 1: " + hashTable1);
             System.out.println("Размер хэш-таблицы: " + hashTable1.size());
             System.out.println();

@@ -1,4 +1,4 @@
-package ru.academits.balyshen.hashtable;
+package ru.academits.balyshen.hash_table;
 
 import java.util.*;
 
@@ -117,21 +117,21 @@ public class HashTable<E> implements Collection<E> {
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        int newElementsCount = 0;
+        int resultElementsCount = 0;
 
         for (ArrayList<E> list : lists) {
             if (list != null) {
                 list.retainAll(collection);
-                newElementsCount += list.size();
+                resultElementsCount += list.size();
             }
         }
 
-        if (elementsCount == newElementsCount) {
+        if (elementsCount == resultElementsCount) {
             return false;
         }
 
         ++modCount;
-        elementsCount = newElementsCount;
+        elementsCount = resultElementsCount;
 
         return true;
     }
@@ -154,7 +154,7 @@ public class HashTable<E> implements Collection<E> {
         private final int expectedModCount = modCount;
         private int indexInArray = -1;
         private int indexInList = -1;
-        private int passedElementsCount = 0;
+        private int passedElementsCount;
 
         public boolean hasNext() {
             return passedElementsCount < elementsCount;
@@ -169,8 +169,6 @@ public class HashTable<E> implements Collection<E> {
                 throw new NoSuchElementException("В списке больше нет элементов.");
             }
 
-            E nextElement;
-
             if (indexInList == -1) {
                 do {
                     ++indexInArray;
@@ -179,7 +177,7 @@ public class HashTable<E> implements Collection<E> {
 
             ++indexInList;
             ++passedElementsCount;
-            nextElement = lists[indexInArray].get(indexInList);
+            E nextElement = lists[indexInArray].get(indexInList);
 
             if (indexInList + 1 >= lists[indexInArray].size()) {
                 indexInList = -1;
@@ -192,10 +190,11 @@ public class HashTable<E> implements Collection<E> {
     @Override
     public Object[] toArray() {
         Object[] array = new Object[elementsCount];
-        int index = 0;
+        int i = 0;
 
         for (E element : this) {
-            array[index++] = element;
+            array[i] = element;
+            i++;
         }
 
         return array;
