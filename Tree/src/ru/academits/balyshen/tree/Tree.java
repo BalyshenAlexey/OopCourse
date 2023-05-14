@@ -20,20 +20,24 @@ public class Tree<T> {
     }
 
     private int compare(T data1, T data2) {
-        if (comparator == null) {
-            if (data1 == null && data2 == null) {
-                return 0;
-            }
-
-            if (data1 == null || data2 == null) {
-                return (data1 == null) ? -1 : 1;
-            }
-
-            //noinspection unchecked
-            return ((Comparable<? super T>) data1).compareTo(data2);
+        if (comparator != null) {
+            return comparator.compare(data1, data2);
         }
 
-        return comparator.compare(data1, data2);
+        if (data1 == null && data2 == null) {
+            return 0;
+        }
+
+        if (data1 == null) {
+            return -1;
+        }
+
+        if (data2 == null) {
+            return 1;
+        }
+
+        //noinspection unchecked
+        return ((Comparable<? super T>) data1).compareTo(data2);
     }
 
     public void add(T data) {
@@ -201,7 +205,7 @@ public class Tree<T> {
         return size;
     }
 
-    public void getAroundInWidth(Consumer<T> action) {
+    public void traverseInWidth(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
@@ -227,7 +231,7 @@ public class Tree<T> {
         }
     }
 
-    public void getAroundInDepth(Consumer<T> action) {
+    public void traverseInDepth(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
@@ -253,7 +257,7 @@ public class Tree<T> {
         }
     }
 
-    public void getAroundInDepthRecursively(Consumer<T> action) {
+    public void traverseInDepthRecursively(Consumer<T> action) {
         if (action == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
