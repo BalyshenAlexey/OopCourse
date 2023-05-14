@@ -241,35 +241,35 @@ public class ArrayList<E> implements List<E> {
             return false;
         }
 
-        boolean isDeleted = false;
+        boolean isRemoved = false;
 
         for (Object item : collection) {
-            boolean isItemDeleted;
+            boolean isItemRemoved;
 
             do {
-                isItemDeleted = remove(item);
+                isItemRemoved = remove(item);
 
-                isDeleted |= isItemDeleted;
-            } while (isItemDeleted);
+                isRemoved |= isItemRemoved;
+            } while (isItemRemoved);
         }
 
-        return isDeleted;
+        return isRemoved;
     }
 
     @Override
     public boolean retainAll(Collection<?> collection) {
-        boolean isDeleted = false;
+        boolean isRemoved = false;
 
         for (int i = 0; i < size; i++) {
             if (!collection.contains(items[i])) {
                 remove(i);
                 i--;
 
-                isDeleted = true;
+                isRemoved = true;
             }
         }
 
-        return isDeleted;
+        return isRemoved;
     }
 
     @Override
