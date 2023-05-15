@@ -33,21 +33,21 @@ public class Main {
 
         System.out.print("Распечатаем дерево 1 используя обход в ширину: ");
 
-        tree1.getAroundInWidth(printTreeElement);
+        tree1.traverseInWidth(printTreeElement);
 
         System.out.println();
         System.out.println();
 
         System.out.print("Распечатаем дерево 1 используя обход в глубину без рекурсии: ");
 
-        tree1.getAroundInDepth(printTreeElement);
+        tree1.traverseInDepth(printTreeElement);
 
         System.out.println();
         System.out.println();
 
         System.out.print("Распечатаем дерево 1 используя обход в глубину с рекурсией: ");
 
-        tree1.getAroundInDepthRecursively(printTreeElement);
+        tree1.traverseInDepthRecursively(printTreeElement);
 
         System.out.println();
         System.out.println();
@@ -90,7 +90,7 @@ public class Main {
             System.out.println("Искомый элемент удален");
             System.out.print("Распечатаем дерево 2 после удаления используя обход в ширину: ");
 
-            tree2.getAroundInWidth(printTreeElement);
+            tree2.traverseInWidth(printTreeElement);
 
             System.out.println();
             System.out.println();
