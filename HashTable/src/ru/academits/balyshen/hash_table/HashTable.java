@@ -200,7 +200,6 @@ public class HashTable<E> implements Collection<E> {
         return array;
     }
 
-
     @Override
     public <T> T[] toArray(T[] array) {
         if (array.length < elementsCount) {

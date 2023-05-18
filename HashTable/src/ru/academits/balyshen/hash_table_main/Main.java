@@ -173,8 +173,8 @@ public class Main {
         System.out.println("10. Проверка метода iterator:");
         System.out.print("Распечатаем значения из Списка 1 используя итератор: ");
 
-        for (Integer s : hashTable1) {
-            System.out.print(s + " ");
+        for (Integer number : hashTable1) {
+            System.out.print(number + " ");
         }
 
         System.out.println();
