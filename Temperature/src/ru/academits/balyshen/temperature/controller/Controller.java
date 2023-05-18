@@ -1,11 +1,12 @@
 package ru.academits.balyshen.temperature.controller;
 
+import ru.academits.balyshen.temperature.scales.TemperatureScale;
 import ru.academits.balyshen.temperature.view.View;
 
 public interface Controller {
     void setView(View view);
 
-    String[] getScales();
+    TemperatureScale[] getScales();
 
-    void convertTemperature(double initialTemperature, String initialScale, String resultingScale);
+    void convertTemperature(double initialTemperature, TemperatureScale initialScale, TemperatureScale resultingScale);
 }

@@ -1,9 +1,10 @@
 package ru.academits.balyshen.temperature.controller;
 
 import ru.academits.balyshen.temperature.model.Model;
+import ru.academits.balyshen.temperature.scales.TemperatureScale;
 import ru.academits.balyshen.temperature.view.View;
 
-public class TemperatureController implements Controller{
+public class TemperatureController implements Controller {
     private final Model model;
 
     private View view;
@@ -16,11 +17,11 @@ public class TemperatureController implements Controller{
         this.view = view;
     }
 
-    public String[] getScales() {
+    public TemperatureScale[] getScales() {
         return model.getScales();
     }
 
-    public void convertTemperature(double initialTemperature, String initialScale, String resultingScale) {
+    public void convertTemperature(double initialTemperature, TemperatureScale initialScale, TemperatureScale resultingScale) {
         try {
             double resultingTemperature = model.convertTemperature(initialTemperature, initialScale, resultingScale);
             view.updateTemperature(resultingTemperature);

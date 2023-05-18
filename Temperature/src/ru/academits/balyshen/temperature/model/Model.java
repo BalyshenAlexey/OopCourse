@@ -1,7 +1,9 @@
 package ru.academits.balyshen.temperature.model;
 
-public interface Model {
-    String[] getScales();
+import ru.academits.balyshen.temperature.scales.TemperatureScale;
 
-    double convertTemperature(double initialTemperature, String initialScale, String resultingScale);
+public interface Model {
+    TemperatureScale[] getScales();
+
+    double convertTemperature(double initialTemperature, TemperatureScale initialScale, TemperatureScale resultingScale);
 }

@@ -1,6 +1,8 @@
 package ru.academits.balyshen.temperature.view;
 
 import ru.academits.balyshen.temperature.controller.Controller;
+import ru.academits.balyshen.temperature.scales.TemperatureScale;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -8,10 +10,11 @@ public class SwingView implements View {
     private final Controller controller;
     private JLabel resultLabel;
     private JFrame frame;
-    private JComboBox<String> resultingScalesComboBox;
+    private JComboBox<TemperatureScale> resultingScalesComboBox;
 
     public SwingView(Controller controller) {
         this.controller = controller;
+        controller.setView(this);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class SwingView implements View {
 
             JPanel initialScalePanel = new JPanel();
             initialScalePanel.add(new JLabel("Исходная шкала:"));
-            JComboBox<String> initialScalesComboBox = new JComboBox<>(controller.getScales());
+            JComboBox<TemperatureScale> initialScalesComboBox = new JComboBox<>(controller.getScales());
             initialScalePanel.add(initialScalesComboBox);
 
             c.gridy = 1;
