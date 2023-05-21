@@ -138,7 +138,6 @@ public class Tree<T> {
                 deletedNode = deletedNode.getRightNode();
             }
 
-
             isRoot = false;
         }
 
@@ -205,8 +204,8 @@ public class Tree<T> {
         return size;
     }
 
-    public void traverseInWidth(Consumer<T> action) {
-        if (action == null) {
+    public void traverseInWidth(Consumer<T> consumer) {
+        if (consumer == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
 
@@ -219,7 +218,7 @@ public class Tree<T> {
 
         while (!queue.isEmpty()) {
             TreeNode<T> currentNode = queue.remove();
-            action.accept(currentNode.getData());
+            consumer.accept(currentNode.getData());
 
             if (currentNode.getLeftNode() != null) {
                 queue.add(currentNode.getLeftNode());
@@ -231,8 +230,8 @@ public class Tree<T> {
         }
     }
 
-    public void traverseInDepth(Consumer<T> action) {
-        if (action == null) {
+    public void traverseInDepth(Consumer<T> consumer) {
+        if (consumer == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
 
@@ -245,7 +244,7 @@ public class Tree<T> {
 
         while (!stack.isEmpty()) {
             TreeNode<T> currentNode = stack.removeLast();
-            action.accept(currentNode.getData());
+            consumer.accept(currentNode.getData());
 
             if (currentNode.getRightNode() != null) {
                 stack.addLast(currentNode.getRightNode());
@@ -257,8 +256,8 @@ public class Tree<T> {
         }
     }
 
-    public void traverseInDepthRecursively(Consumer<T> action) {
-        if (action == null) {
+    public void traverseInDepthRecursively(Consumer<T> consumer) {
+        if (consumer == null) {
             throw new NullPointerException("Выполняемое действие не должно быть null");
         }
 
@@ -266,18 +265,18 @@ public class Tree<T> {
             return;
         }
 
-        visit(action, root);
+        visit(consumer, root);
     }
 
-    private void visit(Consumer<T> action, TreeNode<T> node) {
-        action.accept(node.getData());
+    private void visit(Consumer<T> consumer, TreeNode<T> node) {
+        consumer.accept(node.getData());
 
         if (node.getLeftNode() != null) {
-            visit(action, node.getLeftNode());
+            visit(consumer, node.getLeftNode());
         }
 
         if (node.getRightNode() != null) {
-            visit(action, node.getRightNode());
+            visit(consumer, node.getRightNode());
         }
     }
 }
