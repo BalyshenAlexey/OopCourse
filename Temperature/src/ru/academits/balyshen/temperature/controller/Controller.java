@@ -1,6 +1,6 @@
 package ru.academits.balyshen.temperature.controller;
 
-import ru.academits.balyshen.temperature.scales.TemperatureScale;
+import ru.academits.balyshen.temperature.model.scales.TemperatureScale;
 import ru.academits.balyshen.temperature.view.View;
 
 public interface Controller {

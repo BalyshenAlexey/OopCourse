@@ -1,4 +1,4 @@
-package ru.academits.balyshen.temperature.scales;
+package ru.academits.balyshen.temperature.model.scales;
 
 public interface TemperatureScale {
     double convertToCelsius(double temperature);

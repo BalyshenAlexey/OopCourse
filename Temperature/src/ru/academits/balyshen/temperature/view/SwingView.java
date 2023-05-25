@@ -1,7 +1,7 @@
 package ru.academits.balyshen.temperature.view;
 
 import ru.academits.balyshen.temperature.controller.Controller;
-import ru.academits.balyshen.temperature.scales.TemperatureScale;
+import ru.academits.balyshen.temperature.model.scales.TemperatureScale;
 
 import javax.swing.*;
 import java.awt.*;
@@ -35,7 +35,7 @@ public class SwingView implements View {
             GridBagConstraints c = new GridBagConstraints();
 
             c.gridwidth = 3;
-            c.insets = new Insets(10,0,10,0);
+            c.insets = new Insets(10, 0, 10, 0);
             panel.add(new JLabel("Выберите шкалы для конвертации"), c);
 
             JPanel initialScalePanel = new JPanel();
@@ -44,7 +44,7 @@ public class SwingView implements View {
             initialScalePanel.add(initialScalesComboBox);
 
             c.gridy = 1;
-            c.insets = new Insets(0,10,0,0);
+            c.insets = new Insets(0, 10, 0, 0);
             panel.add(initialScalePanel, c);
 
             JPanel resultingScalePanel = new JPanel();
@@ -53,16 +53,16 @@ public class SwingView implements View {
             resultingScalePanel.add(resultingScalesComboBox);
 
             c.gridy = 2;
-            c.insets = new Insets(0,10,0,0);
+            c.insets = new Insets(0, 10, 0, 0);
             panel.add(resultingScalePanel, c);
 
             c.gridy = 3;
-            c.insets = new Insets(20,0,0,0);
+            c.insets = new Insets(20, 0, 0, 0);
             panel.add(new JLabel("Введите температуру:"), c);
 
             JTextField temperatureTextField = new JTextField(30);
             c.gridy = 4;
-            c.insets = new Insets(0,0,0,0);
+            c.insets = new Insets(0, 0, 0, 0);
             panel.add(temperatureTextField, c);
 
             JButton convertButton = new JButton("Конвертировать");
@@ -70,25 +70,26 @@ public class SwingView implements View {
                 try {
                     String celsiusTemperatureText = temperatureTextField.getText();
                     double celsiusTemperature = Double.parseDouble(celsiusTemperatureText);
-                    controller.convertTemperature(celsiusTemperature, initialScalesComboBox.getItemAt(initialScalesComboBox.getSelectedIndex()),
-                            resultingScalesComboBox.getItemAt(resultingScalesComboBox.getSelectedIndex()));
-
+                    controller.convertTemperature(
+                            celsiusTemperature,
+                            (TemperatureScale) initialScalesComboBox.getSelectedItem(),
+                            (TemperatureScale) resultingScalesComboBox.getSelectedItem());
                 } catch (NumberFormatException exception) {
                     showError("Температура должна быть числом");
                 }
             });
 
             c.gridy = 5;
-            c.insets = new Insets(10,0,0,0);
+            c.insets = new Insets(10, 0, 0, 0);
             panel.add(convertButton, c);
 
             c.gridy = 6;
-            c.insets = new Insets(20,0,0,0);
+            c.insets = new Insets(20, 0, 0, 0);
             panel.add(new JLabel("Результат:"), c);
 
             resultLabel = new JLabel();
             c.gridy = 7;
-            c.insets = new Insets(0,0,0,0);
+            c.insets = new Insets(0, 0, 0, 0);
             panel.add(resultLabel, c);
 
             frame.add(panel, BorderLayout.PAGE_START);

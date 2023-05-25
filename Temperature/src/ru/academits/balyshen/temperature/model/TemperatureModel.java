@@ -1,9 +1,10 @@
 package ru.academits.balyshen.temperature.model;
 
-import ru.academits.balyshen.temperature.scales.TemperatureScale;
+import ru.academits.balyshen.temperature.model.scales.TemperatureScale;
 
+@SuppressWarnings("ClassCanBeRecord")
 public class TemperatureModel implements Model {
-    public TemperatureScale[] scales;
+    private final TemperatureScale[] scales;
 
     public TemperatureModel(TemperatureScale[] scales) {
         this.scales = scales;

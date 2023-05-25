@@ -1,4 +1,4 @@
-package ru.academits.balyshen.temperature.scales;
+package ru.academits.balyshen.temperature.model.scales;
 
 public class FahrenheitScale implements TemperatureScale {
     private final static double ABSOLUTE_ZERO_IN_FAHRENHEIT = -459.67;
