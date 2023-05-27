@@ -12,102 +12,104 @@ public class CsvToHtml {
         };
     }
 
-    public static boolean isPathToCsv(String path) {
-        return path.contains(".csv");
-    }
-
-    public static boolean isPathToHtml(String path) {
-        return path.contains(".html");
-    }
-
     public static void main(String[] args) {
-        if (args.length <= 1 || !isPathToCsv(args[0]) || !isPathToHtml(args[1])) {
-            System.out.println("Ошибка! Некорректные аргументы. Введите 2 аргумета:");
+        if (args.length != 2) {
+            System.out.println("Ошибка! Некорректные аргументы. Введите 2 аргумента:");
             System.out.println("аргумент 1 - путь к файлу формата СSV;");
             System.out.println("аргумент 2 - путь к файлу формата HTML.");
-        } else {
-            String inputFilePath = args[0];
-            String outputFilePath = args[1];
 
-            try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFilePath));
-                 PrintWriter writer = new PrintWriter(outputFilePath)) {
-                writer.println("<!DOCTYPE html>");
-                writer.println("<html>");
-                writer.println("<style>table, th, td {border:1px solid black;}</style>");
-                writer.println("<head>");
-                writer.println("<meta charset=\"utf-8\">");
-                writer.println("<title>Перевод из формата CSV в HTML</title>");
-                writer.println("</head>");
-                writer.println("<body>");
-                writer.println("<table>");
-                writer.println("<tr>");
-                writer.print("<td>");
+            return;
+        }
 
-                int c;
-                boolean isInQuotes = false;
-                boolean isNextEmptyLine = true;
+        String inputFilePath = args[0];
+        String outputFilePath = args[1];
 
-                while ((c = bufferedReader.read()) != -1) {
-                    char symbol = (char) c;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(inputFilePath));
+             PrintWriter writer = new PrintWriter(outputFilePath)) {
+            writer.println("<!DOCTYPE html>");
+            writer.println("<html>");
+            writer.println("<head>");
+            writer.println("<style>table, th, td {border:1px solid black;}</style>");
+            writer.println("<meta charset=\"utf-8\">");
+            writer.println("<title>Перевод из формата CSV в HTML</title>");
+            writer.println("</head>");
+            writer.println("<body>");
+            writer.println("<table>");
 
-                    if (symbol == '"') {
-                        if (!isInQuotes) {
-                            isInQuotes = true;
-                            continue;
-                        }
+            int c;
+            boolean isInQuotes = false;
+            boolean isNextEmptyLine = true;
+            boolean isNewLine = true;
 
-                        if ((c = bufferedReader.read()) == -1) {
-                            break;
-                        }
+            while ((c = bufferedReader.read()) != -1) {
+                if (isNewLine) {
+                    writer.println("<tr>");
+                    writer.print("<td>");
+                }
 
-                        symbol = (char) c;
+                isNewLine = false;
 
-                        if (symbol != '"') {
-                            isInQuotes = false;
-                        }
-                    }
+                char symbol = (char) c;
 
-                    if (symbol == ',' && !isInQuotes) {
-                        writer.println("</td>");
-                        writer.print("<td>");
+                if (symbol == '"') {
+                    if (!isInQuotes) {
+                        isInQuotes = true;
                         continue;
                     }
 
-                    if (symbol == '\r') {
-                        continue;
+                    if ((c = bufferedReader.read()) == -1) {
+                        break;
                     }
 
-                    if (symbol == '\n') {
-                        if (!isInQuotes) {
-                            if (isNextEmptyLine) {
-                                continue;
-                            }
+                    symbol = (char) c;
 
-                            writer.println("</td>");
-                            writer.println("</tr>");
-                            writer.println("<tr>");
-                            writer.print("<td>");
-
-                            isNextEmptyLine = true;
-                        } else {
-                            writer.print("<br/>");
-                        }
-                        continue;
+                    if (symbol != '"') {
+                        isInQuotes = false;
                     }
+                }
+
+                if (symbol == ',' && !isInQuotes) {
+                    writer.println("</td>");
+                    writer.print("<td>");
 
                     isNextEmptyLine = false;
 
-                    writer.print(replaceSpecialCharacter(symbol));
+                    continue;
                 }
 
-                writer.println("</td>");
-                writer.println("</tr>");
-                writer.println("</table>");
-                writer.println("</body>");
-                writer.println("</html>");
-            } catch (IOException e) {
-                System.out.println("Ошибка! Файлы отсутствуют");
+                if (symbol == '\r') {
+                    continue;
+                }
+
+                if (symbol == '\n') {
+                    if (!isInQuotes) {
+                        if (isNextEmptyLine) {
+                            continue;
+                        }
+
+                        writer.println("</td>");
+                        writer.println("</tr>");
+
+                        isNewLine = true;
+                        isNextEmptyLine = true;
+                    } else {
+                        writer.print("<br/>");
+                    }
+
+                    continue;
+                }
+
+                writer.print(replaceSpecialCharacter(symbol));
             }
+
+            writer.println("</table>");
+            writer.println("</body>");
+            writer.println("</html>");
+        } catch (FileNotFoundException e) {
+            System.out.println("Ошибка! Исходный файл с данными отсутствует");
+        } catch (IOException e) {
+            System.out.println("Ошибка ввода-вывода!");
+            e.printStackTrace();
         }
     }
 }
