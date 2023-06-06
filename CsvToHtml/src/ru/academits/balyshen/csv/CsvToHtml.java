@@ -29,9 +29,9 @@ public class CsvToHtml {
             writer.println("<!DOCTYPE html>");
             writer.println("<html>");
             writer.println("<head>");
-            writer.println("<style>table, th, td {border:1px solid black;}</style>");
-            writer.println("<meta charset=\"utf-8\">");
-            writer.println("<title>Перевод из формата CSV в HTML</title>");
+            writer.println("\t<style>table, th, td {border:1px solid black;}</style>");
+            writer.println("\t<meta charset=\"utf-8\">");
+            writer.println("\t<title>Перевод из формата CSV в HTML</title>");
             writer.println("</head>");
             writer.println("<body>");
             writer.println("<table>");
@@ -43,8 +43,8 @@ public class CsvToHtml {
 
             while ((c = bufferedReader.read()) != -1) {
                 if (isNewLine) {
-                    writer.println("<tr>");
-                    writer.print("<td>");
+                    writer.println("\t<tr>");
+                    writer.print("\t\t<td>");
                 }
 
                 isNewLine = false;
@@ -70,7 +70,7 @@ public class CsvToHtml {
 
                 if (symbol == ',' && !isInQuotes) {
                     writer.println("</td>");
-                    writer.print("<td>");
+                    writer.print("\t\t<td>");
 
                     isNextEmptyLine = false;
 
@@ -88,7 +88,7 @@ public class CsvToHtml {
                         }
 
                         writer.println("</td>");
-                        writer.println("</tr>");
+                        writer.println("\t</tr>");
 
                         isNewLine = true;
                         isNextEmptyLine = true;
@@ -100,6 +100,11 @@ public class CsvToHtml {
                 }
 
                 writer.print(replaceSpecialCharacter(symbol));
+            }
+
+            if (!isNewLine) {
+                writer.println("</td>");
+                writer.println("\t</tr>");
             }
 
             writer.println("</table>");
